@@ -4,6 +4,10 @@
     align-items: center;
     border: 3px solid burlywood;
 
+    &.Win {
+        background: #4b7777;
+    }
+
     &:nth-child(1) {
         border-left: none;
         border-top: none;
@@ -33,12 +37,11 @@
         border-bottom: none;
     }
 
-    span {
+    .Marker {
         position: absolute;
         font-size: 120px;
         color: #fff;
-        animation-name: thesign;
-        animation-duration: 0.5s;
+        animation: thesign 0.5s ease-in-out;
 
         @keyframes thesign {
             from {

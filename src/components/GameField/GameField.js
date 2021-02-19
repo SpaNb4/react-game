@@ -17,7 +17,10 @@ function calculateWinner(cells) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-            return cells[a];
+            return {
+                winner: cells[a],
+                lines: lines[i],
+            };
         }
     }
 
@@ -42,11 +45,11 @@ export default function GameField() {
 
     let status;
     const winner = calculateWinner(cells);
-    
+
     if (!cells.includes(null) && !winner) {
-        status='Nobody wins! Try again'
+        status = 'Nobody wins! Try again';
     } else {
-        winner ? (status = winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
+        winner ? (status = winner.winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
     }
 
     return (
@@ -54,6 +57,18 @@ export default function GameField() {
             <div className={classes.Moves}>{status}</div>
             <div className={classes.CellsItems}>
                 {cells.map((cell, index) => {
+                    if (winner) {
+                        if (winner.lines[0] == index || winner.lines[1] == index || winner.lines[2] == index) {
+                            return (
+                                <Cell
+                                    win={true}
+                                    key={index}
+                                    value={cells[index]}
+                                    cellClickHandler={() => cellClickHandler(index)}
+                                />
+                            );
+                        }
+                    }
                     return <Cell key={index} value={cells[index]} cellClickHandler={() => cellClickHandler(index)} />;
                 })}
             </div>

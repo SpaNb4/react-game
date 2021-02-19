@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Cell from './Cell/Cell';
 import classes from './GameField.module.scss';
 
 export default function GameField() {
-    const cells = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const [cells, setCells] = useState(Array(9).fill(null));
+
+    function cellClickHandler(index) {
+        const cellsCopy = cells.slice();
+        cellsCopy[index] = 'X';
+        setCells(cellsCopy);
+    }
 
     return (
         <div className={classes.GameField}>
             <div className={classes.CellsItems}>
                 {cells.map((cell, index) => {
-                    return <Cell key={index} />;
+                    return <Cell key={index} value={cells[index]} cellClickHandler={() => cellClickHandler(index)} />;
                 })}
             </div>
         </div>

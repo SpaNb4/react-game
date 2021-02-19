@@ -20,6 +20,7 @@ function calculateWinner(cells) {
             return cells[a];
         }
     }
+
     return null;
 }
 
@@ -29,9 +30,11 @@ export default function GameField() {
 
     function cellClickHandler(index) {
         const cellsCopy = cells.slice();
+
         if (calculateWinner(cells) || cells[index]) {
             return;
         }
+
         cellsCopy[index] = xIsNext ? 'X' : 'O';
         setCells(cellsCopy);
         setXisNext(!xIsNext);
@@ -39,7 +42,12 @@ export default function GameField() {
 
     let status;
     const winner = calculateWinner(cells);
-    winner ? (status = winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
+    
+    if (!cells.includes(null) && !winner) {
+        status='Nobody wins! Try again'
+    } else {
+        winner ? (status = winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
+    }
 
     return (
         <div className={classes.GameField}>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Cell from './Cell/Cell';
 import classes from './GameField.module.scss';
+import soundX from './audio/X_click.wav';
+import soundO from './audio/O_click.wav';
+import soundWin from './audio/win.wav';
+import soundNoWinner from './audio/no_winner.wav';
 
 function calculateWinner(cells) {
     const lines = [
@@ -30,6 +34,7 @@ function calculateWinner(cells) {
 export default function GameField() {
     const [cells, setCells] = useState(Array(9).fill(null));
     const [xIsNext, setXisNext] = useState(true);
+    const [isSound, setSound] = useState(true);
 
     function cellClickHandler(index) {
         const cellsCopy = cells.slice();
@@ -41,6 +46,11 @@ export default function GameField() {
         cellsCopy[index] = xIsNext ? 'X' : 'O';
         setCells(cellsCopy);
         setXisNext(!xIsNext);
+
+        if (isSound) {
+            const audio = new Audio(xIsNext ? soundX : soundO);
+            audio.play();
+        }
     }
 
     let status;
@@ -48,13 +58,35 @@ export default function GameField() {
 
     if (!cells.includes(null) && !winner) {
         status = 'Nobody wins! Try again';
-    } else {
+        const audio = new Audio(soundNoWinner);
+        if (isSound) {
+            audio.play();
+        }
+    } else if (winner) {
+        const audio = new Audio(soundWin);
+        if (isSound) {
+            audio.play();
+        }
+    }
+
+    if (!status) {
         winner ? (status = winner.winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
     }
 
     return (
         <div className={classes.GameField}>
-            <div className={classes.Moves}>{status}</div>
+            <div className={classes.TopMenuField}>
+                <div className={classes.Moves}>{status}</div>
+                {isSound ? (
+                    <i className="material-icons" onClick={() => setSound(!isSound)}>
+                        notifications_active
+                    </i>
+                ) : (
+                    <i className="material-icons" onClick={() => setSound(!isSound)}>
+                        notifications_off
+                    </i>
+                )}
+            </div>
             <div className={classes.CellsItems}>
                 {cells.map((cell, index) => {
                     if (winner) {

@@ -5,6 +5,14 @@
     gap: 40px;
     margin: 80px 0;
 
+    .TopMenuField {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        
+    }
+
     .Moves {
         font-family: 'Montserrat', sans-serif;
         font-size: 36px;

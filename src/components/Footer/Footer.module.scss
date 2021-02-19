@@ -1,0 +1,19 @@
+.Footer {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+
+    .GithubIcon {
+        width: 40px;
+    }
+
+    .Copyright {
+        font-size: 26px;
+    }
+
+    .RsSchoolIcon {
+        width: 80px;
+    }
+}

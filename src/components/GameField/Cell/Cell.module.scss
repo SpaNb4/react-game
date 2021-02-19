@@ -1,0 +1,52 @@
+.Cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid burlywood;
+
+    &:nth-child(1) {
+        border-left: none;
+        border-top: none;
+    }
+    &:nth-child(2) {
+        border-top: none;
+    }
+    &:nth-child(3) {
+        border-right: none;
+        border-top: none;
+    }
+    &:nth-child(4) {
+        border-left: none;
+    }
+    &:nth-child(6) {
+        border-right: none;
+    }
+    &:nth-child(7) {
+        border-left: none;
+        border-bottom: none;
+    }
+    &:nth-child(8) {
+        border-bottom: none;
+    }
+    &:nth-child(9) {
+        border-right: none;
+        border-bottom: none;
+    }
+
+    span {
+        position: absolute;
+        font-size: 120px;
+        color: #fff;
+        animation-name: thesign;
+        animation-duration: 0.5s;
+
+        @keyframes thesign {
+            from {
+                font-size: 0px;
+            }
+            to {
+                font-size: 120px;
+            }
+        }
+    }
+}

@@ -7,14 +7,11 @@
 
     .TopMenuField {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         gap: 30px;
-        
     }
 
     .Moves {
-        font-family: 'Montserrat', sans-serif;
         font-size: 36px;
         text-transform: uppercase;
         color: #fff;
@@ -24,5 +21,17 @@
         display: grid;
         grid-template-columns: repeat(3, 166px);
         height: 500px;
+    }
+
+    .VolumeControl {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        p {
+        padding: 0;
+        margin: 0;
+        }
     }
 }

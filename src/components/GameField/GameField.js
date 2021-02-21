@@ -5,6 +5,10 @@ import soundX from './audio/X_click.wav';
 import soundO from './audio/O_click.wav';
 import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
+import soundBackground from './audio/back_music.mp3';
+
+const music = new Audio(soundBackground);
+music.loop = true;
 
 function calculateWinner(cells) {
     const lines = [
@@ -35,6 +39,10 @@ export default function GameField() {
     const [cells, setCells] = useState(Array(9).fill(null));
     const [xIsNext, setXisNext] = useState(true);
     const [isSound, setSound] = useState(true);
+    const [isMusic, setMusic] = useState(false);
+    const [soundVolume, setSoundVolume] = useState(1);
+    const [musicVolume, setMusicVolume] = useState(1);
+    const [isEnd, setIsEnd] = useState(false);
 
     function cellClickHandler(index) {
         const cellsCopy = cells.slice();
@@ -49,6 +57,7 @@ export default function GameField() {
 
         if (isSound) {
             const audio = new Audio(xIsNext ? soundX : soundO);
+            audio.volume = soundVolume;
             audio.play();
         }
     }
@@ -56,21 +65,40 @@ export default function GameField() {
     let status;
     const winner = calculateWinner(cells);
 
-    if (!cells.includes(null) && !winner) {
+    if (!cells.includes(null) && !winner && !isEnd) {
         status = 'Nobody wins! Try again';
-        const audio = new Audio(soundNoWinner);
+
         if (isSound) {
-            audio.play();
+            const audioNoWinner = new Audio(soundNoWinner);
+            audioNoWinner.volume = soundVolume;
+            audioNoWinner.play();
         }
-    } else if (winner) {
-        const audio = new Audio(soundWin);
+        setIsEnd(true);
+    } else if (winner && !isEnd) {
         if (isSound) {
-            audio.play();
+            const audioWin = new Audio(soundWin);
+            audioWin.volume = soundVolume;
+            audioWin.play();
         }
+        setIsEnd(true);
     }
 
     if (!status) {
         winner ? (status = winner.winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
+    }
+
+    function musicClick() {
+        setMusic(!isMusic);
+        isMusic ? music.pause() : music.play();
+    }
+
+    function changeSoundVolume(event) {
+        setSoundVolume(event.target.value / 100);
+    }
+
+    function changeMusicVolume(event) {
+        setMusicVolume(event.target.value / 100);
+        music.volume = musicVolume;
     }
 
     return (
@@ -78,13 +106,32 @@ export default function GameField() {
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
                 {isSound ? (
-                    <i className="material-icons" onClick={() => setSound(!isSound)}>
-                        notifications_active
-                    </i>
+                    <div className={classes.VolumeControl}>
+                        <i className="material-icons" onClick={() => setSound(!isSound)}>
+                            notifications_active
+                        </i>
+                        <input type="range" value={soundVolume * 100} onChange={changeSoundVolume}></input>
+                    </div>
                 ) : (
                     <i className="material-icons" onClick={() => setSound(!isSound)}>
                         notifications_off
                     </i>
+                )}
+
+                {isMusic ? (
+                    <div className={classes.VolumeControl}>
+                        <i className="material-icons" onClick={musicClick}>
+                            pause
+                        </i>
+                        <input type="range" value={musicVolume * 100} onChange={changeMusicVolume}></input>
+                    </div>
+                ) : (
+                    <div className={classes.VolumeControl}>
+                        <i className="material-icons" onClick={musicClick}>
+                            play_arrow
+                        </i>
+                        <p>Play music</p>
+                    </div>
                 )}
             </div>
             <div className={classes.CellsItems}>

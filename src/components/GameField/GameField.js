@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Cell from './Cell/Cell';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faBellSlash, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import classes from './GameField.module.scss';
 import soundX from './audio/X_click.wav';
 import soundO from './audio/O_click.wav';
@@ -107,29 +109,21 @@ export default function GameField() {
                 <div className={classes.Moves}>{status}</div>
                 {isSound ? (
                     <div className={classes.VolumeControl}>
-                        <i className="material-icons" onClick={() => setSound(!isSound)}>
-                            notifications_active
-                        </i>
+                        <FontAwesomeIcon className={classes.Icon} icon={faBell} onClick={() => setSound(!isSound)} />
                         <input type="range" value={soundVolume * 100} onChange={changeSoundVolume}></input>
                     </div>
                 ) : (
-                    <i className="material-icons" onClick={() => setSound(!isSound)}>
-                        notifications_off
-                    </i>
+                    <FontAwesomeIcon className={classes.Icon} icon={faBellSlash} onClick={() => setSound(!isSound)} />
                 )}
 
                 {isMusic ? (
                     <div className={classes.VolumeControl}>
-                        <i className="material-icons" onClick={musicClick}>
-                            pause
-                        </i>
+                        <FontAwesomeIcon className={classes.Icon} icon={faVolumeMute} onClick={musicClick} />
                         <input type="range" value={musicVolume * 100} onChange={changeMusicVolume}></input>
                     </div>
                 ) : (
                     <div className={classes.VolumeControl}>
-                        <i className="material-icons" onClick={musicClick}>
-                            play_arrow
-                        </i>
+                        <FontAwesomeIcon className={classes.Icon} icon={faVolumeUp} onClick={musicClick} />
                         <p>Play music</p>
                     </div>
                 )}

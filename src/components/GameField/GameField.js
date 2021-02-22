@@ -45,8 +45,11 @@ export default function GameField(props) {
     const [soundVolume, setSoundVolume] = useState(1);
     const [musicVolume, setMusicVolume] = useState(1);
     const [isEnd, setIsEnd] = useState(false);
+    const [isGameStart, setGameStart] = useState(false);
 
     function cellClickHandler(index) {
+        setGameStart(true);
+
         const cellsCopy = cells.slice();
 
         if (calculateWinner(cells) || cells[index]) {
@@ -103,6 +106,12 @@ export default function GameField(props) {
         music.volume = musicVolume;
     }
 
+    function changeMovesOrder() {
+        if (!isGameStart) {
+            setXisNext(!xIsNext);
+        }
+    }
+
     return (
         <div className={classes.GameField}>
             <div className={classes.TopMenuField}>
@@ -152,6 +161,9 @@ export default function GameField(props) {
                         />
                     );
                 })}
+            </div>
+            <div className={classes.BottomMenuField} onClick={changeMovesOrder}>
+                Change Moves Order
             </div>
         </div>
     );

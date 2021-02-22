@@ -37,7 +37,7 @@ function calculateWinner(cells) {
     return null;
 }
 
-export default function GameField() {
+export default function GameField(props) {
     const [cells, setCells] = useState(Array(9).fill(null));
     const [xIsNext, setXisNext] = useState(true);
     const [isSound, setSound] = useState(true);
@@ -134,6 +134,7 @@ export default function GameField() {
                         if (winner.lines[0] == index || winner.lines[1] == index || winner.lines[2] == index) {
                             return (
                                 <Cell
+                                    isOrange={props.isOrange}
                                     win={true}
                                     key={index}
                                     value={cells[index]}
@@ -142,7 +143,14 @@ export default function GameField() {
                             );
                         }
                     }
-                    return <Cell key={index} value={cells[index]} cellClickHandler={() => cellClickHandler(index)} />;
+                    return (
+                        <Cell
+                            isOrange={props.isOrange}
+                            key={index}
+                            value={cells[index]}
+                            cellClickHandler={() => cellClickHandler(index)}
+                        />
+                    );
                 })}
             </div>
         </div>

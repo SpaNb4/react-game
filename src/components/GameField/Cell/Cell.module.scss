@@ -37,20 +37,25 @@
         border-right: none;
         border-bottom: none;
     }
+}
 
-    .Marker {
-        position: absolute;
-        font-size: 120px;
-        color: #fff;
-        animation: thesign 0.5s ease-in-out;
+.Marker {
+    position: absolute;
+    font-size: 120px;
+    color: #fff;
+    animation: thesign 0.5s ease-in-out;
 
-        @keyframes thesign {
-            from {
-                font-size: 0px;
-            }
-            to {
-                font-size: 120px;
-            }
+    @keyframes thesign {
+        from {
+            font-size: 0px;
+        }
+        to {
+            font-size: 120px;
         }
     }
+}
+
+.OrangeTheme {
+    color: #000000;
+    border-color: #ffffff;
 }

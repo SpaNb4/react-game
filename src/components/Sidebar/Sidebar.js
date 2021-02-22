@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import classes from './Sidebar.module.scss';
 
-function Menu() {
+function Menu(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuCls = [classes.MenuPopup];
     const btnCls = [classes.Icon];
@@ -31,6 +31,7 @@ function Menu() {
                     <li>Auth</li>
                     <li>Stats</li>
                     <li>Volume Settings</li>
+                    <li onClick={props.changeTheme}>Change Theme</li>
                 </ul>
             </div>
             <div className={blackoutCls.join(' ')} onClick={blackoutClickHandler}></div>

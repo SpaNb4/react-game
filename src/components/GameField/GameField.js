@@ -8,6 +8,7 @@ import soundO from './audio/O_click.wav';
 import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
 import soundBackground from './audio/back_music.mp3';
+import { Timer } from './Timer/Timer';
 
 const music = new Audio(soundBackground);
 music.loop = true;
@@ -114,6 +115,7 @@ export default function GameField(props) {
 
     return (
         <div className={classes.GameField}>
+            <Timer isGameStart={isGameStart} />
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
                 {isSound ? (

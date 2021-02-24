@@ -55,15 +55,17 @@ export function setMusic() {
     };
 }
 
-export function setSoundVolume() {
+export function setSoundVolume(sound) {
     return {
         type: SET_SOUND_VOLUME,
+        payload: sound,
     };
 }
 
-export function setMusicVolume() {
+export function setMusicVolume(sound) {
     return {
         type: SET_MUSIC_VOLUME,
+        payload: sound,
     };
 }
 

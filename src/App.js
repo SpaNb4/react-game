@@ -21,7 +21,7 @@ import {
 function App(props) {
     return (
         <div className={classes.App}>
-            <Sidebar isOrange={props.isOrangeTheme} changeTheme={props.changeTheme} />
+            <Sidebar {...props} />
             <Header />
             <GameField {...props} />
             <Footer />

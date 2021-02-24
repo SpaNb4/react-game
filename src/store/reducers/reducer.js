@@ -16,7 +16,7 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CHANGE_THEME:
             document.body.classList.toggle('OrangeTheme');
-            return { isOrangeTheme: !state.isOrangeTheme };
+            return { ...state, isOrangeTheme: !state.isOrangeTheme };
         case START_GAME:
             return { ...state, isGameStart: true };
         case END_GAME:

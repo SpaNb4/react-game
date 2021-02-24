@@ -8,6 +8,9 @@
         margin: 28px 0;
         cursor: pointer;
     }
+    ul {
+        list-style-type: none;
+    }
 }
 
 .Icon {
@@ -19,6 +22,24 @@
     color: #fff;
     cursor: pointer;
     transition: 1s;
+}
+
+.SoundIcon {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.SoundMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 28px;
+    height: 80px;
+}
+
+.VolumeControl {
+    display: flex;
+    gap: 10px;
 }
 
 .Rotate {

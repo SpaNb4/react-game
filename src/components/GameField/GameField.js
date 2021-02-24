@@ -1,17 +1,11 @@
 import React, { useEffect } from 'react';
 import Cell from './Cell/Cell';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faBellSlash, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import classes from './GameField.module.scss';
 import soundX from './audio/X_click.wav';
 import soundO from './audio/O_click.wav';
 import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
-import soundBackground from './audio/back_music.mp3';
 import { Timer } from './Timer/Timer';
-
-const music = new Audio(soundBackground);
-music.loop = true;
 
 function calculateWinner(cells) {
     const lines = [
@@ -63,7 +57,7 @@ export default function GameField(props) {
 
     let status;
     const winner = calculateWinner(props.cells);
-    
+
     useEffect(() => {
         if (!props.cells.includes(null) && !winner && !props.isEnd) {
             if (props.isSound) {
@@ -94,20 +88,6 @@ export default function GameField(props) {
         }
     }
 
-    function musicClick() {
-        props.setMusic();
-        props.isMusic ? music.pause() : music.play();
-    }
-
-    function changeSoundVolume(event) {
-        props.setSoundVolume(event.target.value / 100);
-    }
-
-    function changeMusicVolume(event) {
-        props.setMusicVolume(event.target.value / 100);
-        music.volume = props.musicVolume;
-    }
-
     function changeMovesOrder() {
         if (!props.isGameStart) {
             props.setXisNext();
@@ -119,26 +99,6 @@ export default function GameField(props) {
             <Timer {...props} />
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
-                {props.isSound ? (
-                    <div className={classes.VolumeControl}>
-                        <FontAwesomeIcon className={classes.Icon} icon={faBell} onClick={() => props.setSound()} />
-                        <input type="range" value={props.soundVolume * 100} onChange={changeSoundVolume}></input>
-                    </div>
-                ) : (
-                    <FontAwesomeIcon className={classes.Icon} icon={faBellSlash} onClick={() => props.setSound()} />
-                )}
-
-                {props.isMusic ? (
-                    <div className={classes.VolumeControl}>
-                        <FontAwesomeIcon className={classes.Icon} icon={faVolumeMute} onClick={musicClick} />
-                        <input type="range" value={props.musicVolume * 100} onChange={changeMusicVolume}></input>
-                    </div>
-                ) : (
-                    <div className={classes.VolumeControl}>
-                        <FontAwesomeIcon className={classes.Icon} icon={faVolumeUp} onClick={musicClick} />
-                        <p>Play music</p>
-                    </div>
-                )}
             </div>
             <div className={classes.CellsItems}>
                 {props.cells.map((cell, index) => {

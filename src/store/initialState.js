@@ -10,6 +10,7 @@ const initialState = {
     isMusic: false,
     soundVolume: 1,
     musicVolume: 1,
+    isWithDiagonals: true,
 };
 
 export default initialState;

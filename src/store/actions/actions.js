@@ -2,6 +2,7 @@ import {
     CHANGE_THEME,
     END_GAME,
     SET_CELLS,
+    SET_DIAGONALS,
     SET_MUSIC,
     SET_MUSIC_VOLUME,
     SET_SOUND,
@@ -72,5 +73,11 @@ export function setMusicVolume(sound) {
 export function setXisNext() {
     return {
         type: SET_X_IS_NEXT,
+    };
+}
+
+export function setDiagonals() {
+    return {
+        type: SET_DIAGONALS,
     };
 }

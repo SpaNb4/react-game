@@ -16,6 +16,7 @@ import {
     setSoundVolume,
     setMusicVolume,
     setXisNext,
+    setDiagonals,
 } from './store/actions/actions';
 
 function App(props) {
@@ -42,6 +43,7 @@ function mapStateToProps(state) {
         isMusic: state.reducer.isMusic,
         soundVolume: state.reducer.soundVolume,
         musicVolume: state.reducer.musicVolume,
+        isWithDiagonals: state.reducer.isWithDiagonals,
     };
 }
 
@@ -57,6 +59,7 @@ function mapDispatchToProps(dispatch) {
         setSoundVolume: (sound) => dispatch(setSoundVolume(sound)),
         setMusicVolume: (sound) => dispatch(setMusicVolume(sound)),
         setXisNext: () => dispatch(setXisNext()),
+        setDiagonals: () => dispatch(setDiagonals()),
     };
 }
 

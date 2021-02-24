@@ -8,3 +8,4 @@ export const SET_MUSIC = 'SET_MUSIC';
 export const SET_SOUND_VOLUME = 'SET_SOUND_VOLUME';
 export const SET_MUSIC_VOLUME = 'SET_MUSIC_VOLUME';
 export const SET_X_IS_NEXT = 'SET_X_IS_NEXT';
+export const SET_DIAGONALS = 'SET_DIAGONALS';

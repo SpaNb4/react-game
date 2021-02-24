@@ -9,6 +9,7 @@ import {
     SET_SOUND_VOLUME,
     SET_MUSIC_VOLUME,
     SET_X_IS_NEXT,
+    SET_DIAGONALS,
 } from '../actions/actionTypes';
 import initialState from '../initialState';
 
@@ -35,6 +36,8 @@ export default function reducer(state = initialState, action) {
             return { ...state, musicVolume: action.payload };
         case SET_X_IS_NEXT:
             return { ...state, xIsNext: !state.xIsNext };
+        case SET_DIAGONALS:
+            return { ...state, isWithDiagonals: !state.isWithDiagonals };
         default:
             return state;
     }

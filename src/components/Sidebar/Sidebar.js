@@ -111,6 +111,11 @@ function Menu(props) {
                             </div>
                         ) : null}
                     </ul>
+                    {props.isWithDiagonals ? (
+                        <li onClick={() => props.setDiagonals(!props.isWithDiagonals)}>With Diagonals</li>
+                    ) : (
+                        <li onClick={() => props.setDiagonals(!props.isWithDiagonals)}>Without Diagonals</li>
+                    )}
                     <li onClick={props.changeTheme}>Change Theme</li>
                 </ul>
             </div>

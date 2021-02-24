@@ -7,31 +7,6 @@ import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
 
-function calculateWinner(cells) {
-    const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-            return {
-                winner: cells[a],
-                lines: lines[i],
-            };
-        }
-    }
-
-    return null;
-}
-
 export default function GameField(props) {
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -53,6 +28,43 @@ export default function GameField(props) {
                 audio.play();
             }
         }
+    }
+
+    function calculateWinner(cells) {
+        let lines;
+        if (props.isWithDiagonals) {
+            lines = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+        } else {
+            lines = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+            ];
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+                return {
+                    winner: cells[a],
+                    lines: lines[i],
+                };
+            }
+        }
+
+        return null;
     }
 
     let status;

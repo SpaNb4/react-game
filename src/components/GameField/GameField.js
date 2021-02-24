@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Cell from './Cell/Cell';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faBellSlash, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
@@ -39,98 +39,99 @@ function calculateWinner(cells) {
 }
 
 export default function GameField(props) {
-    const [cells, setCells] = useState(Array(9).fill(null));
-    const [xIsNext, setXisNext] = useState(true);
-    const [isSound, setSound] = useState(true);
-    const [isMusic, setMusic] = useState(false);
-    const [soundVolume, setSoundVolume] = useState(1);
-    const [musicVolume, setMusicVolume] = useState(1);
-    const [isEnd, setIsEnd] = useState(false);
-    const [isGameStart, setGameStart] = useState(false);
-
     function cellClickHandler(index) {
-        setGameStart(true);
+        if (!props.isEnd) {
+            props.startGame();
 
-        const cellsCopy = cells.slice();
+            const cellsCopy = props.cells.slice();
 
-        if (calculateWinner(cells) || cells[index]) {
-            return;
-        }
+            if (calculateWinner(props.cells) || props.cells[index]) {
+                return;
+            }
 
-        cellsCopy[index] = xIsNext ? 'X' : 'O';
-        setCells(cellsCopy);
-        setXisNext(!xIsNext);
+            cellsCopy[index] = props.xIsNext ? 'X' : 'O';
+            props.setCells(cellsCopy);
+            props.setXisNext();
 
-        if (isSound) {
-            const audio = new Audio(xIsNext ? soundX : soundO);
-            audio.volume = soundVolume;
-            audio.play();
+            if (props.isSound) {
+                const audio = new Audio(props.xIsNext ? soundX : soundO);
+                audio.volume = props.soundVolume;
+                audio.play();
+            }
         }
     }
 
     let status;
-    const winner = calculateWinner(cells);
+    const winner = calculateWinner(props.cells);
+    
+    useEffect(() => {
+        if (!props.cells.includes(null) && !winner && !props.isEnd) {
+            if (props.isSound) {
+                const audioNoWinner = new Audio(soundNoWinner);
+                audioNoWinner.volume = props.soundVolume;
+                audioNoWinner.play();
+            }
 
-    if (!cells.includes(null) && !winner && !isEnd) {
-        status = 'Nobody wins! Try again';
+            props.endGame();
+        } else if (winner && !props.isEnd) {
+            if (props.isSound) {
+                const audioWin = new Audio(soundWin);
+                audioWin.volume = props.soundVolume;
+                audioWin.play();
+            }
 
-        if (isSound) {
-            const audioNoWinner = new Audio(soundNoWinner);
-            audioNoWinner.volume = soundVolume;
-            audioNoWinner.play();
+            props.endGame();
         }
-        setIsEnd(true);
-    } else if (winner && !isEnd) {
-        if (isSound) {
-            const audioWin = new Audio(soundWin);
-            audioWin.volume = soundVolume;
-            audioWin.play();
-        }
-        setIsEnd(true);
-    }
+    });
 
-    if (!status) {
-        winner ? (status = winner.winner + ' win!') : (status = `It's player ` + (xIsNext ? 'X' : 'O') + ' turn');
+    if (winner) {
+        status = winner.winner + ' win!';
+    } else {
+        if (props.isEnd) {
+            status = 'Nobody wins! Try again';
+        } else {
+            status = `It's player ` + (props.xIsNext ? 'X' : 'O') + ' turn';
+        }
     }
 
     function musicClick() {
-        setMusic(!isMusic);
-        isMusic ? music.pause() : music.play();
+        props.setMusic();
+        props.isMusic ? music.pause() : music.play();
     }
 
     function changeSoundVolume(event) {
-        setSoundVolume(event.target.value / 100);
+        props.setSoundVolume(event.target.value / 100);
     }
 
     function changeMusicVolume(event) {
-        setMusicVolume(event.target.value / 100);
-        music.volume = musicVolume;
+        props.setMusicVolume(event.target.value / 100);
+        music.volume = props.musicVolume;
     }
 
     function changeMovesOrder() {
-        if (!isGameStart) {
-            setXisNext(!xIsNext);
+        if (!props.isGameStart) {
+            props.setXisNext();
         }
     }
 
     return (
         <div className={classes.GameField}>
-            <Timer isGameStart={isGameStart} />
+            <Timer {...props} />
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
-                {isSound ? (
+                {props.isSound ? (
                     <div className={classes.VolumeControl}>
-                        <FontAwesomeIcon className={classes.Icon} icon={faBell} onClick={() => setSound(!isSound)} />
-                        <input type="range" value={soundVolume * 100} onChange={changeSoundVolume}></input>
+                        <FontAwesomeIcon className={classes.Icon} icon={faBell} onClick={() => props.setSound()} />
+                        <input type="range" value={props.soundVolume * 100} onChange={changeSoundVolume}></input>
                     </div>
                 ) : (
-                    <FontAwesomeIcon className={classes.Icon} icon={faBellSlash} onClick={() => setSound(!isSound)} />
+                    <FontAwesomeIcon className={classes.Icon} icon={faBellSlash} onClick={() => props.setSound()} />
                 )}
 
-                {isMusic ? (
+                {props.isMusic ? (
                     <div className={classes.VolumeControl}>
                         <FontAwesomeIcon className={classes.Icon} icon={faVolumeMute} onClick={musicClick} />
-                        <input type="range" value={musicVolume * 100} onChange={changeMusicVolume}></input>
+                        <input type="range" value={props.musicVolume * 100} onChange={changeMusicVolume}></input>
                     </div>
                 ) : (
                     <div className={classes.VolumeControl}>
@@ -140,7 +141,7 @@ export default function GameField(props) {
                 )}
             </div>
             <div className={classes.CellsItems}>
-                {cells.map((cell, index) => {
+                {props.cells.map((cell, index) => {
                     if (winner) {
                         if (winner.lines[0] == index || winner.lines[1] == index || winner.lines[2] == index) {
                             return (
@@ -148,7 +149,7 @@ export default function GameField(props) {
                                     isOrange={props.isOrange}
                                     win={true}
                                     key={index}
-                                    value={cells[index]}
+                                    value={props.cells[index]}
                                     cellClickHandler={() => cellClickHandler(index)}
                                 />
                             );
@@ -158,7 +159,7 @@ export default function GameField(props) {
                         <Cell
                             isOrange={props.isOrange}
                             key={index}
-                            value={cells[index]}
+                            value={props.cells[index]}
                             cellClickHandler={() => cellClickHandler(index)}
                         />
                     );

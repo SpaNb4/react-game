@@ -1,58 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Timer.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
-export class Timer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            time: 0,
-            isOn: false,
-            start: 0,
-        };
+export function Timer(props) {
+    const [counter, setCounter] = useState(0);
 
-        this.startTimer = this.startTimer.bind(this);
-        this.stopTimer = this.stopTimer.bind(this);
-        this.resetTimer = this.resetTimer.bind(this);
-    }
+    useEffect(() => {
+        let intervalId;
 
-    startTimer() {
-        this.setState({
-            isOn: true,
-            time: this.state.time,
-            start: Date.now() - this.state.time,
-        });
+        if (props.isGameStart) {
+            intervalId = setInterval(() => {
+                const secondCounter = counter % 60;
+                const minuteCounter = Math.floor(counter / 60);
 
-        this.timer = setInterval(
-            () =>
-                this.setState({
-                    time: Date.now() - this.state.start,
-                }),
-            1000
-        );
-    }
+                const computedSecond = String(secondCounter).length === 1 ? `0${secondCounter}` : secondCounter;
+                const computedMinute = String(minuteCounter).length === 1 ? `0${minuteCounter}` : minuteCounter;
 
-    stopTimer() {
-        this.setState({ isOn: false });
-        clearInterval(this.timer);
-    }
+                props.setTime({ second: computedSecond, minute: computedMinute });
 
-    resetTimer() {
-        this.setState({ time: 0, isOn: false });
-    }
-
-    componentDidMount() {
-        if (!this.props.isGameStart) {
-            this.startTimer();
+                setCounter((counter) => counter + 1);
+            }, 1000);
+        } else {
+            stopTimer();
         }
+
+        return () => clearInterval(intervalId);
+    }, [props.isGameStart, counter]);
+
+    function stopTimer() {
+        setCounter(0);
     }
 
-    render() {
-        return (
-            <div className={classes.Timer}>
-                <FontAwesomeIcon icon={faClock} /> {Math.round(this.state.time / 1000)} sec
-            </div>
-        );
-    }
+    return (
+        <div className={classes.Timer}>
+            <FontAwesomeIcon icon={faClock} />
+            {props.minute}:{props.second}
+        </div>
+    );
 }

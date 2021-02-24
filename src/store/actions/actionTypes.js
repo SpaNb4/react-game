@@ -1,0 +1,10 @@
+export const CHANGE_THEME = 'CHANGE_THEME';
+export const START_GAME = 'START_GAME';
+export const END_GAME = 'END_GAME';
+export const SET_TIME = 'SET_TIME';
+export const SET_CELLS = 'SET_CELLS';
+export const SET_SOUND = 'SET_SOUND';
+export const SET_MUSIC = 'SET_MUSIC';
+export const SET_SOUND_VOLUME = 'SET_SOUND_VOLUME';
+export const SET_MUSIC_VOLUME = 'SET_MUSIC_VOLUME';
+export const SET_X_IS_NEXT = 'SET_X_IS_NEXT';

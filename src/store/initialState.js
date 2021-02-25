@@ -11,6 +11,8 @@ const initialState = {
     soundVolume: 1,
     musicVolume: 1,
     isWithDiagonals: true,
+    isStatsOpen: false,
+    stats: [],
 };
 
 export default initialState;

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Header from './components/Header/Header';
 import GameField from './components/GameField/GameField';
 import Footer from './components/Footer/Footer';
 import Sidebar from './components/Sidebar/Sidebar';
+import ModalStats from './components/ModalStats/ModalStats';
 import classes from './App.module.scss';
 import {
     changeTheme,
@@ -17,6 +18,8 @@ import {
     setMusicVolume,
     setXisNext,
     setDiagonals,
+    openStats,
+    setStats,
 } from './store/actions/actions';
 
 function App(props) {
@@ -26,6 +29,7 @@ function App(props) {
             <Header />
             <GameField {...props} />
             <Footer />
+            <ModalStats {...props} />
         </div>
     );
 }
@@ -44,6 +48,8 @@ function mapStateToProps(state) {
         soundVolume: state.reducer.soundVolume,
         musicVolume: state.reducer.musicVolume,
         isWithDiagonals: state.reducer.isWithDiagonals,
+        isStatsOpen: state.reducer.isStatsOpen,
+        stats: state.reducer.stats,
     };
 }
 
@@ -60,6 +66,8 @@ function mapDispatchToProps(dispatch) {
         setMusicVolume: (sound) => dispatch(setMusicVolume(sound)),
         setXisNext: () => dispatch(setXisNext()),
         setDiagonals: () => dispatch(setDiagonals()),
+        openStats: () => dispatch(openStats()),
+        setStats: (stats) => dispatch(setStats(stats)),
     };
 }
 

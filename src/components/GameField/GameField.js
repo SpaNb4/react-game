@@ -79,6 +79,11 @@ export default function GameField(props) {
             }
 
             props.endGame();
+            const stats = {
+                winner,
+                time: `${props.minute}:${props.second}`,
+            };
+            props.setStats(stats);
         } else if (winner && !props.isEnd) {
             if (props.isSound) {
                 const audioWin = new Audio(soundWin);
@@ -87,6 +92,11 @@ export default function GameField(props) {
             }
 
             props.endGame();
+            const stats = {
+                winner,
+                time: `${props.minute}:${props.second}`,
+            };
+            props.setStats(stats);
         }
     });
 

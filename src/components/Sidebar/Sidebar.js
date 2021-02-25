@@ -29,6 +29,10 @@ function Menu(props) {
 
     function blackoutClickHandler(event) {
         setIsMenuOpen(!isMenuOpen);
+
+        if (props.isStatsOpen) {
+            props.openStats();
+        }
     }
 
     function musicClick() {
@@ -57,7 +61,7 @@ function Menu(props) {
             <div className={menuCls.join(' ')}>
                 <ul className={classes.MenuUl}>
                     <li>Auth</li>
-                    <li>Stats</li>
+                    <li onClick={() => props.openStats()}>Stats</li>
                     <li onClick={() => setDropDownMenu(!isDropDownMenu)}>
                         Volume Settings{' '}
                         {isDropDownMenu ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}

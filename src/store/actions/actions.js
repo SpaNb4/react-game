@@ -1,12 +1,14 @@
 import {
     CHANGE_THEME,
     END_GAME,
+    OPEN_STATS,
     SET_CELLS,
     SET_DIAGONALS,
     SET_MUSIC,
     SET_MUSIC_VOLUME,
     SET_SOUND,
     SET_SOUND_VOLUME,
+    SET_STATS,
     SET_TIME,
     SET_X_IS_NEXT,
     START_GAME,
@@ -79,5 +81,18 @@ export function setXisNext() {
 export function setDiagonals() {
     return {
         type: SET_DIAGONALS,
+    };
+}
+
+export function openStats() {
+    return {
+        type: OPEN_STATS,
+    };
+}
+
+export function setStats(stats) {
+    return {
+        type: SET_STATS,
+        payload: stats,
     };
 }

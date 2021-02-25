@@ -9,3 +9,5 @@ export const SET_SOUND_VOLUME = 'SET_SOUND_VOLUME';
 export const SET_MUSIC_VOLUME = 'SET_MUSIC_VOLUME';
 export const SET_X_IS_NEXT = 'SET_X_IS_NEXT';
 export const SET_DIAGONALS = 'SET_DIAGONALS';
+export const OPEN_STATS = 'OPEN_STATS';
+export const SET_STATS = 'SET_STATS';

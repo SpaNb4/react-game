@@ -12,6 +12,7 @@ import {
     SET_DIAGONALS,
     OPEN_STATS,
     SET_STATS,
+    NEW_GAME,
 } from '../actions/actionTypes';
 import initialState from '../initialState';
 
@@ -21,7 +22,7 @@ export default function reducer(state = initialState, action) {
             document.body.classList.toggle('OrangeTheme');
             return { ...state, isOrangeTheme: !state.isOrangeTheme };
         case START_GAME:
-            return { ...state, isGameStart: true };
+            return { ...state, isGameStart: true, isEnd: false };
         case END_GAME:
             return { ...state, isGameStart: false, isEnd: true };
         case SET_TIME:
@@ -44,6 +45,15 @@ export default function reducer(state = initialState, action) {
             return { ...state, isStatsOpen: !state.isStatsOpen };
         case SET_STATS:
             return { ...state, stats: [...state.stats, action.payload] };
+        case NEW_GAME:
+            return {
+                ...state,
+                isGameStart: false,
+                isEnd: false,
+                cells: Array(9).fill(null),
+                second: '00',
+                minute: '00',
+            };
         default:
             return state;
     }

@@ -79,11 +79,6 @@ export default function GameField(props) {
             }
 
             props.endGame();
-            const stats = {
-                winner,
-                time: `${props.minute}:${props.second}`,
-            };
-            props.setStats(stats);
         } else if (winner && !props.isEnd) {
             if (props.isSound) {
                 const audioWin = new Audio(soundWin);
@@ -114,6 +109,10 @@ export default function GameField(props) {
         if (!props.isGameStart) {
             props.setXisNext();
         }
+    }
+
+    function startNewGame() {
+        props.newGame();
     }
 
     return (
@@ -147,8 +146,9 @@ export default function GameField(props) {
                     );
                 })}
             </div>
-            <div className={classes.BottomMenuField} onClick={changeMovesOrder}>
-                Change Moves Order
+            <div className={classes.BottomMenuField}>
+                <div onClick={changeMovesOrder}>Change Moves Order</div>
+                <div onClick={startNewGame}>New Game</div>
             </div>
         </div>
     );

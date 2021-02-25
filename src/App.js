@@ -20,6 +20,7 @@ import {
     setDiagonals,
     openStats,
     setStats,
+    newGame,
 } from './store/actions/actions';
 
 function App(props) {
@@ -68,6 +69,7 @@ function mapDispatchToProps(dispatch) {
         setDiagonals: () => dispatch(setDiagonals()),
         openStats: () => dispatch(openStats()),
         setStats: (stats) => dispatch(setStats(stats)),
+        newGame: () => dispatch(newGame()),
     };
 }
 

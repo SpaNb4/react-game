@@ -12,6 +12,7 @@ import {
     SET_TIME,
     SET_X_IS_NEXT,
     START_GAME,
+    NEW_GAME,
 } from './actionTypes';
 
 export function changeTheme() {
@@ -94,5 +95,11 @@ export function setStats(stats) {
     return {
         type: SET_STATS,
         payload: stats,
+    };
+}
+
+export function newGame() {
+    return {
+        type: NEW_GAME,
     };
 }

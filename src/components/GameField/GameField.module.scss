@@ -32,7 +32,9 @@
     }
 
     .BottomMenuField {
-        font-size: 28;
+        display: flex;
+        gap: 20px;
+        font-size: 28px;
         text-transform: uppercase;
         cursor: pointer;
         color: #ffffff;

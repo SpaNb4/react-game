@@ -8,6 +8,10 @@ export default function ModalStats(props) {
         modalCls.push(classes.Active);
     }
 
+    const copyStats = [...props.stats];
+    copyStats.reverse();
+    copyStats.length = 10;
+
     if (props.isStatsOpen) {
         return (
             <div className={modalCls.join(' ')}>
@@ -16,12 +20,14 @@ export default function ModalStats(props) {
                         <tr>
                             <td>Winner</td>
                             <td>Time</td>
+                            <td>Win Lines</td>
                         </tr>
-                        {props.stats.map((elem, index) => {
+                        {copyStats.map((elem, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{elem.winner.winner}</td>
                                     <td>{elem.time}</td>
+                                    <td>{elem.winner.lines}</td>
                                 </tr>
                             );
                         })}

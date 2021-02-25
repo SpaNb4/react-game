@@ -13,13 +13,13 @@ import {
     OPEN_STATS,
     SET_STATS,
     NEW_GAME,
+    SET_COUNTER,
 } from '../actions/actionTypes';
 import initialState from '../initialState';
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case CHANGE_THEME:
-            document.body.classList.toggle('OrangeTheme');
             return { ...state, isOrangeTheme: !state.isOrangeTheme };
         case START_GAME:
             return { ...state, isGameStart: true, isEnd: false };
@@ -54,6 +54,8 @@ export default function reducer(state = initialState, action) {
                 second: '00',
                 minute: '00',
             };
+        case SET_COUNTER:
+            return { ...state, timeCounter: action.payload };
         default:
             return state;
     }

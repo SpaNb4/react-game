@@ -13,6 +13,7 @@ import {
     SET_X_IS_NEXT,
     START_GAME,
     NEW_GAME,
+    SET_COUNTER,
 } from './actionTypes';
 
 export function changeTheme() {
@@ -101,5 +102,12 @@ export function setStats(stats) {
 export function newGame() {
     return {
         type: NEW_GAME,
+    };
+}
+
+export function setCounter(counter) {
+    return {
+        type: SET_COUNTER,
+        payload: counter,
     };
 }

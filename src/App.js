@@ -21,9 +21,16 @@ import {
     openStats,
     setStats,
     newGame,
+    setCounter,
 } from './store/actions/actions';
 
 function App(props) {
+    if (props.isOrangeTheme) {
+        document.body.classList.add('OrangeTheme');
+    } else {
+        document.body.classList.remove('OrangeTheme');
+    }
+
     return (
         <div className={classes.App}>
             <Sidebar {...props} />
@@ -42,6 +49,7 @@ function mapStateToProps(state) {
         isEnd: state.reducer.isEnd,
         second: state.reducer.second,
         minute: state.reducer.minute,
+        timeCounter: state.reducer.timeCounter,
         cells: state.reducer.cells,
         xIsNext: state.reducer.xIsNext,
         isSound: state.reducer.isSound,
@@ -70,6 +78,7 @@ function mapDispatchToProps(dispatch) {
         openStats: () => dispatch(openStats()),
         setStats: (stats) => dispatch(setStats(stats)),
         newGame: () => dispatch(newGame()),
+        setCounter: (counter) => dispatch(setCounter(counter)),
     };
 }
 

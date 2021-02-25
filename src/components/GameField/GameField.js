@@ -95,6 +95,10 @@ export default function GameField(props) {
         }
     });
 
+    useEffect(() => {
+        localStorage.setItem('state', JSON.stringify(props));
+    });
+
     if (winner) {
         status = winner.winner + ' win!';
     } else {

@@ -9,6 +9,10 @@ export default function Cell(props) {
         cls.push(classes.Win);
     }
 
+    if (props.active === props.number && !props.win) {
+        cls.push(classes.Active);
+    }
+
     if (props.isOrange) {
         cls.push(classes.OrangeTheme);
         cellCls.push(classes.OrangeTheme);

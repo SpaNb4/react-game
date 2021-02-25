@@ -75,7 +75,7 @@ function mapDispatchToProps(dispatch) {
         setMusicVolume: (sound) => dispatch(setMusicVolume(sound)),
         setXisNext: () => dispatch(setXisNext()),
         setDiagonals: () => dispatch(setDiagonals()),
-        openStats: () => dispatch(openStats()),
+        openStats: (open) => dispatch(openStats(open)),
         setStats: (stats) => dispatch(setStats(stats)),
         newGame: () => dispatch(newGame()),
         setCounter: (counter) => dispatch(setCounter(counter)),

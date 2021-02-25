@@ -86,9 +86,10 @@ export function setDiagonals() {
     };
 }
 
-export function openStats() {
+export function openStats(open) {
     return {
         type: OPEN_STATS,
+        payload: open,
     };
 }
 

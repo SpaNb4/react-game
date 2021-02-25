@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowDown,
@@ -31,9 +32,14 @@ function Menu(props) {
         setIsMenuOpen(!isMenuOpen);
 
         if (props.isStatsOpen) {
-            props.openStats();
+            props.openStats(false);
         }
     }
+
+    useHotkeys('esc', () => {
+        props.openStats(false);
+    });
+    useHotkeys('m', () => setIsMenuOpen(!isMenuOpen));
 
     function musicClick() {
         props.setMusic();
@@ -61,7 +67,7 @@ function Menu(props) {
             <div className={menuCls.join(' ')}>
                 <ul className={classes.MenuUl}>
                     <li>Auth</li>
-                    <li onClick={() => props.openStats()}>Stats</li>
+                    <li onClick={() => props.openStats(!props.isStatsOpen)}>Stats</li>
                     <li onClick={() => setDropDownMenu(!isDropDownMenu)}>
                         Volume Settings{' '}
                         {isDropDownMenu ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}

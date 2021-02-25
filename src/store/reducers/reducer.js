@@ -42,7 +42,7 @@ export default function reducer(state = initialState, action) {
         case SET_DIAGONALS:
             return { ...state, isWithDiagonals: !state.isWithDiagonals };
         case OPEN_STATS:
-            return { ...state, isStatsOpen: !state.isStatsOpen };
+            return { ...state, isStatsOpen: action.payload };
         case SET_STATS:
             return { ...state, stats: [...state.stats, action.payload] };
         case NEW_GAME:

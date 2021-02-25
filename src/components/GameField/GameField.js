@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import Cell from './Cell/Cell';
 import classes from './GameField.module.scss';
 import soundX from './audio/X_click.wav';
@@ -8,6 +9,8 @@ import soundNoWinner from './audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
 
 export default function GameField(props) {
+    var [activeIndex, setActiveIndex] = useState(null);
+
     function cellClickHandler(index) {
         if (!props.isEnd) {
             props.startGame();
@@ -93,11 +96,56 @@ export default function GameField(props) {
             };
             props.setStats(stats);
         }
-    });
 
-    useEffect(() => {
         localStorage.setItem('state', JSON.stringify(props));
     });
+
+    useHotkeys(
+        'left',
+        () => {
+            if (activeIndex % 3) {
+                setActiveIndex((prevCount) => prevCount - 1);
+            }
+        },
+        [activeIndex]
+    );
+    useHotkeys(
+        'up',
+        () => {
+            if (activeIndex > 9 / 3 - 1) {
+                setActiveIndex((prevCount) => prevCount - 3);
+            }
+        },
+        [activeIndex]
+    );
+    useHotkeys(
+        'right',
+        () => {
+            if ((activeIndex + 1) % 3) {
+                setActiveIndex((prevCount) => prevCount + 1);
+            }
+        },
+        [activeIndex]
+    );
+    useHotkeys(
+        'down',
+        () => {
+            if (activeIndex < (6 * 3) / 3) {
+                setActiveIndex((prevCount) => prevCount + 3);
+            }
+        },
+        [activeIndex]
+    );
+
+    useHotkeys(
+        'enter',
+        () => {
+            cellClickHandler(activeIndex);
+        },
+        [activeIndex]
+    );
+
+    useHotkeys('q', () => props.newGame());
 
     if (winner) {
         status = winner.winner + ' win!';
@@ -143,7 +191,9 @@ export default function GameField(props) {
                     return (
                         <Cell
                             isOrange={props.isOrange}
+                            active={activeIndex}
                             key={index}
+                            number={index}
                             value={props.cells[index]}
                             cellClickHandler={() => cellClickHandler(index)}
                         />

@@ -9,7 +9,8 @@ import soundNoWinner from './audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
 
 export default function GameField(props) {
-    var [activeIndex, setActiveIndex] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(null);
+    const [isAutoPlay, setIsAutoPlay] = useState(false);
 
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -165,7 +166,36 @@ export default function GameField(props) {
 
     function startNewGame() {
         props.newGame();
+        setIsAutoPlay(false);
     }
+
+    function getRandomIndex() {
+        let index = Math.round(Math.random() * 8);
+        if (!props.cells[index]) {
+            return index;
+        }
+        return getRandomIndex();
+    }
+
+    function autoPlay() {
+        startNewGame();
+        setIsAutoPlay(true);
+    }
+
+    useEffect(() => {
+        let interval;
+
+        if (isAutoPlay && !props.isEnd) {
+            interval = setInterval(() => {
+                let randomIndex = getRandomIndex();
+                cellClickHandler(randomIndex);
+            }, 1000);
+        } else {
+            setIsAutoPlay(false);
+        }
+
+        return () => clearInterval(interval);
+    }, [isAutoPlay, props.cells, props.isEnd, props.xIsNext]);
 
     return (
         <div className={classes.GameField}>
@@ -188,21 +218,34 @@ export default function GameField(props) {
                             );
                         }
                     }
-                    return (
-                        <Cell
-                            isOrange={props.isOrange}
-                            active={activeIndex}
-                            key={index}
-                            number={index}
-                            value={props.cells[index]}
-                            cellClickHandler={() => cellClickHandler(index)}
-                        />
-                    );
+                    if (isAutoPlay) {
+                        return (
+                            <Cell
+                                isOrange={props.isOrange}
+                                active={activeIndex}
+                                key={index}
+                                number={index}
+                                value={props.cells[index]}
+                            />
+                        );
+                    } else {
+                        return (
+                            <Cell
+                                isOrange={props.isOrange}
+                                active={activeIndex}
+                                key={index}
+                                number={index}
+                                value={props.cells[index]}
+                                cellClickHandler={() => cellClickHandler(index)}
+                            />
+                        );
+                    }
                 })}
             </div>
             <div className={classes.BottomMenuField}>
                 <div onClick={changeMovesOrder}>Change Moves Order</div>
                 <div onClick={startNewGame}>New Game</div>
+                <div onClick={autoPlay}>Autoplay</div>
             </div>
         </div>
     );

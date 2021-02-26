@@ -18,6 +18,10 @@ export default function Cell(props) {
         cellCls.push(classes.OrangeTheme);
     }
 
+    if (props.value) {
+        cls.push(classes.Filled);
+    }
+
     return (
         <div className={cls.join(' ')} onClick={props.cellClickHandler}>
             {props.value ? <span className={cellCls.join(' ')}>{props.value}</span> : null}

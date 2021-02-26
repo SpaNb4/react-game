@@ -3,6 +3,11 @@
     justify-content: center;
     align-items: center;
     border: 3px solid burlywood;
+    cursor: pointer;
+
+    &.Filled {
+        cursor: default;
+    }
 
     &.Win {
         background: #4b7777;

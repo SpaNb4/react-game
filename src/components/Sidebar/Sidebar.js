@@ -10,6 +10,7 @@ import {
     faVolumeMute,
     faVolumeUp,
 } from '@fortawesome/free-solid-svg-icons';
+import ModalHotKeys from '../ModalHotKeys/ModalHotKeys';
 import soundBackground from '../GameField/audio/back_music.mp3';
 import classes from './Sidebar.module.scss';
 
@@ -19,6 +20,7 @@ music.loop = true;
 function Menu(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropDownMenu, setDropDownMenu] = useState(false);
+    const [isHotKeysOpen, setIsHotKeysOpen] = useState(false);
     const menuCls = [classes.MenuPopup];
     const btnCls = [classes.Icon];
     const soundIconCls = [classes.SoundIcon, 'fa-fw'];
@@ -33,6 +35,9 @@ function Menu(props) {
 
         if (props.isStatsOpen) {
             props.openStats(false);
+        }
+        if (isHotKeysOpen) {
+            setIsHotKeysOpen(false);
         }
     }
 
@@ -61,13 +66,23 @@ function Menu(props) {
         blackoutCls.push(classes.BlackoutActive);
     }
 
+    function statsClickHandler() {
+        props.openStats(!props.isStatsOpen);
+        setIsHotKeysOpen(false);
+    }
+
+    function hotKeysClickHandler() {
+        setIsHotKeysOpen(!isHotKeysOpen);
+        props.openStats(false);
+    }
+
     return (
         <div>
             <FontAwesomeIcon className={btnCls.join(' ')} icon={faBars} onClick={menuClickHandler} />
             <div className={menuCls.join(' ')}>
                 <ul className={classes.MenuUl}>
                     <li>Auth</li>
-                    <li onClick={() => props.openStats(!props.isStatsOpen)}>Stats</li>
+                    <li onClick={statsClickHandler}>Stats</li>
                     <li onClick={() => setDropDownMenu(!isDropDownMenu)}>
                         Volume Settings{' '}
                         {isDropDownMenu ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}
@@ -127,9 +142,11 @@ function Menu(props) {
                         <li onClick={() => props.setDiagonals(!props.isWithDiagonals)}>Without Diagonals</li>
                     )}
                     <li onClick={props.changeTheme}>Change Theme</li>
+                    <li onClick={hotKeysClickHandler}>Hot keys</li>
                 </ul>
             </div>
             <div className={blackoutCls.join(' ')} onClick={blackoutClickHandler}></div>
+            <ModalHotKeys isHotKeysOpen={isHotKeysOpen} setIsHotKeysOpen={setIsHotKeysOpen} />
         </div>
     );
 }

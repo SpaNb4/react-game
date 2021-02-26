@@ -1,20 +1,20 @@
-.ModalStats {
+.ModalHotKeys {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%) scale(1);
     transition: 200ms ease-in-out;
     z-index: 1;
     border-radius: 0.9rem;
     background-color: #fafafa;
     width: 500px;
     height: 500px;
-    table {
-        margin: 0 auto;
-        td {
-            text-align: center;
-            padding: 10px;
-        }
+    h1 {
+        text-align: center;
+    }
+    div {
+        margin-left: 30px;
+        padding: 10px;
     }
 }
 
@@ -24,8 +24,8 @@
 
 .CloseBtn {
     position: absolute;
-    top: -45px;
-    right: -45px;
+    top: -50px;
+    right: -50px;
     font-size: 38px;
     cursor: pointer;
 }

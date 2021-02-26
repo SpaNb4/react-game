@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import classes from './ModalStats.module.scss';
 
 export default function ModalStats(props) {
@@ -15,6 +17,9 @@ export default function ModalStats(props) {
     if (props.isStatsOpen) {
         return (
             <div className={modalCls.join(' ')}>
+                <div className={classes.CloseBtn}>
+                    <FontAwesomeIcon icon={faTimesCircle} onClick={() => props.openStats(false)} />
+                </div>
                 <table>
                     <tbody>
                         <tr>

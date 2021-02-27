@@ -22,6 +22,8 @@ import {
     setStats,
     newGame,
     setCounter,
+    setAuth,
+    setStatsFromBD,
 } from './store/actions/actions';
 
 function App(props) {
@@ -59,6 +61,7 @@ function mapStateToProps(state) {
         isWithDiagonals: state.reducer.isWithDiagonals,
         isStatsOpen: state.reducer.isStatsOpen,
         stats: state.reducer.stats,
+        isAuthenticated: state.reducer.isAuthenticated,
     };
 }
 
@@ -79,6 +82,8 @@ function mapDispatchToProps(dispatch) {
         setStats: (stats) => dispatch(setStats(stats)),
         newGame: () => dispatch(newGame()),
         setCounter: (counter) => dispatch(setCounter(counter)),
+        setAuth: () => dispatch(setAuth()),
+        setStatsFromBD: (stats) => dispatch(setStatsFromBD(stats)),
     };
 }
 

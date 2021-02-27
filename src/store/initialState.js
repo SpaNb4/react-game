@@ -14,6 +14,7 @@ const initialState = JSON.parse(localStorage.getItem('state')) || {
     isWithDiagonals: true,
     isStatsOpen: false,
     stats: [],
+    isAuthenticated: false,
 };
 
 export default initialState;

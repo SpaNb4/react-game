@@ -96,6 +96,26 @@ export default function GameField(props) {
                 time: `${props.minute}:${props.second}`,
             };
             props.setStats(stats);
+
+            fetch(`http://localhost:8000/checkauth`, {
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.username)
+                        return fetch(`http://localhost:8000/save`, {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                username: res.username,
+                                stats: [...props.stats, stats],
+                            }),
+                        });
+                });
         }
 
         localStorage.setItem('state', JSON.stringify(props));

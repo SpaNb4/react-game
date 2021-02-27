@@ -13,6 +13,8 @@ import {
 import ModalHotKeys from '../ModalHotKeys/ModalHotKeys';
 import soundBackground from '../GameField/audio/back_music.mp3';
 import classes from './Sidebar.module.scss';
+import ModalLogin from '../ModalLogin/ModalLogin';
+import ModalRegister from '../ModalRegister/ModalRegister';
 
 const music = new Audio(soundBackground);
 music.loop = true;
@@ -21,6 +23,8 @@ function Menu(props) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropDownMenu, setDropDownMenu] = useState(false);
     const [isHotKeysOpen, setIsHotKeysOpen] = useState(false);
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const menuCls = [classes.MenuPopup];
     const btnCls = [classes.Icon];
     const soundIconCls = [classes.SoundIcon, 'fa-fw'];
@@ -76,12 +80,41 @@ function Menu(props) {
         props.openStats(false);
     }
 
+    function loginClickHandler() {
+        setIsLoginOpen(true);
+    }
+
+    function registerClickHandler() {
+        setIsRegisterOpen(true);
+    }
+
+    function logoutClickHandler() {
+        props.setAuth();
+        fetch(`http://localhost:8000/logout`, {
+            method: 'get',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                if (res) {
+                }
+            });
+    }
+
     return (
         <div>
             <FontAwesomeIcon className={btnCls.join(' ')} icon={faBars} onClick={menuClickHandler} />
             <div className={menuCls.join(' ')}>
                 <ul className={classes.MenuUl}>
-                    <li>Auth</li>
+                    {props.isAuthenticated ? (
+                        <li onClick={logoutClickHandler}>Logout</li>
+                    ) : (
+                        <div>
+                            <li onClick={loginClickHandler}>Login</li> <li onClick={registerClickHandler}>Register</li>
+                        </div>
+                    )}
                     <li onClick={statsClickHandler}>Stats</li>
                     <li onClick={() => setDropDownMenu(!isDropDownMenu)}>
                         Volume Settings{' '}
@@ -147,6 +180,8 @@ function Menu(props) {
             </div>
             <div className={blackoutCls.join(' ')} onClick={blackoutClickHandler}></div>
             <ModalHotKeys isHotKeysOpen={isHotKeysOpen} setIsHotKeysOpen={setIsHotKeysOpen} />
+            <ModalLogin isLoginOpen={isLoginOpen} {...props} />
+            <ModalRegister isRegisterOpen={isRegisterOpen} />
         </div>
     );
 }

@@ -14,6 +14,8 @@ import {
     START_GAME,
     NEW_GAME,
     SET_COUNTER,
+    SET_AUTH,
+    SET_STATS_FROM_BD,
 } from './actionTypes';
 
 export function changeTheme() {
@@ -110,5 +112,18 @@ export function setCounter(counter) {
     return {
         type: SET_COUNTER,
         payload: counter,
+    };
+}
+
+export function setAuth() {
+    return {
+        type: SET_AUTH,
+    };
+}
+
+export function setStatsFromBD(stats) {
+    return {
+        type: SET_STATS_FROM_BD,
+        payload: stats,
     };
 }

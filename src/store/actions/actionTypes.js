@@ -13,3 +13,5 @@ export const OPEN_STATS = 'OPEN_STATS';
 export const SET_STATS = 'SET_STATS';
 export const NEW_GAME = 'NEW_GAME';
 export const SET_COUNTER = 'SET_COUNTER';
+export const SET_AUTH = 'SET_AUTH';
+export const SET_STATS_FROM_BD = 'SET_STATS_FROM_BD';

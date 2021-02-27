@@ -14,6 +14,8 @@ import {
     SET_STATS,
     NEW_GAME,
     SET_COUNTER,
+    SET_AUTH,
+    SET_STATS_FROM_BD,
 } from '../actions/actionTypes';
 import initialState from '../initialState';
 
@@ -45,6 +47,8 @@ export default function reducer(state = initialState, action) {
             return { ...state, isStatsOpen: action.payload };
         case SET_STATS:
             return { ...state, stats: [...state.stats, action.payload] };
+        case SET_STATS_FROM_BD:
+            return { ...state, stats: action.payload };
         case NEW_GAME:
             return {
                 ...state,
@@ -56,6 +60,8 @@ export default function reducer(state = initialState, action) {
             };
         case SET_COUNTER:
             return { ...state, timeCounter: action.payload };
+        case SET_AUTH:
+            return { ...state, isAuthenticated: !state.isAuthenticated };
         default:
             return state;
     }

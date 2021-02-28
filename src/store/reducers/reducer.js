@@ -10,7 +10,6 @@ import {
     SET_MUSIC_VOLUME,
     SET_X_IS_NEXT,
     SET_DIAGONALS,
-    OPEN_STATS,
     SET_STATS,
     NEW_GAME,
     SET_COUNTER,
@@ -43,8 +42,6 @@ export default function reducer(state = initialState, action) {
             return { ...state, xIsNext: !state.xIsNext };
         case SET_DIAGONALS:
             return { ...state, isWithDiagonals: !state.isWithDiagonals };
-        case OPEN_STATS:
-            return { ...state, isStatsOpen: action.payload };
         case SET_STATS:
             return { ...state, stats: [...state.stats, action.payload] };
         case SET_STATS_FROM_BD:
@@ -61,7 +58,7 @@ export default function reducer(state = initialState, action) {
         case SET_COUNTER:
             return { ...state, timeCounter: action.payload };
         case SET_AUTH:
-            return { ...state, isAuthenticated: !state.isAuthenticated };
+            return { ...state, isAuthenticated: action.payload };
         default:
             return state;
     }

@@ -88,13 +88,6 @@ export function setDiagonals() {
     };
 }
 
-export function openStats(open) {
-    return {
-        type: OPEN_STATS,
-        payload: open,
-    };
-}
-
 export function setStats(stats) {
     return {
         type: SET_STATS,
@@ -115,9 +108,10 @@ export function setCounter(counter) {
     };
 }
 
-export function setAuth() {
+export function setAuth(auth) {
     return {
         type: SET_AUTH,
+        payload: auth,
     };
 }
 

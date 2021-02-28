@@ -1,16 +1,11 @@
 import React, { useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import classes from './ModalLogin.module.scss';
+import Modal from '../Modal';
 
 export default function ModalLogin(props) {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
-    const modalCls = [classes.ModalLogin];
-
-    if (props.isLoginOpen) {
-        modalCls.push(classes.Active);
-    }
+    const loginStatusRef = useRef(null);
 
     function submitLogin(event) {
         event.preventDefault();
@@ -28,10 +23,14 @@ export default function ModalLogin(props) {
             .then((res) => res.json())
             .then((res) => {
                 if (res.errors) {
-                    console.log('Invalid email or password');
+                    loginStatusRef.current.innerHTML = 'Invalid email or password';
+                    loginStatusRef.current.classList.add(classes.Failed);
+                    loginStatusRef.current.classList.remove(classes.Success);
                 } else if (res.success) {
-                    console.log("You're logged in");
-                    props.setAuth();
+                    loginStatusRef.current.innerHTML = `You're logged in`;
+                    loginStatusRef.current.classList.add(classes.Success);
+                    loginStatusRef.current.classList.remove(classes.Failed);
+                    props.setAuth(true);
 
                     return fetch(`http://localhost:8000/getsave`, {
                         method: 'post',
@@ -57,22 +56,19 @@ export default function ModalLogin(props) {
             });
     }
 
-    if (props.isLoginOpen) {
-        return (
-            <div className={modalCls.join(' ')}>
-                <div className={classes.CloseBtn}>
-                    <FontAwesomeIcon icon={faTimesCircle} onClick={() => props.setIsHotKeysOpen(false)} />
-                </div>
+    return (
+        <Modal isShow={props.isLoginOpen} closeAllModal={props.closeAllModal}>
+            <div className={classes.ModalLogin}>
                 <h1>Login</h1>
                 <form>
-                    <label htmlFor="email">Email:</label>
-                    <input id="email" ref={emailRef} type="text"></input>
-                    <label htmlFor="password">Password:</label>
-                    <input id="password" ref={passwordRef} type="password"></input>
+                    <label htmlFor="login_email">Email:</label>
+                    <input id="login_email" ref={emailRef} type="text"></input>
+                    <label htmlFor="login_password">Password:</label>
+                    <input id="login_password" ref={passwordRef} type="password"></input>
+                    <div ref={loginStatusRef} className={classes.LoginStatus}></div>
                     <button onClick={submitLogin}>Login</button>
                 </form>
             </div>
-        );
-    }
-    return null;
+        </Modal>
+    );
 }

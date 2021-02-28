@@ -1,17 +1,10 @@
 import React, { useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import Modal from '../Modal';
 import classes from './ModalRegister.module.scss';
 
 export default function ModalRegister(props) {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
-
-    const modalCls = [classes.ModalRegister];
-
-    if (props.isRegisterOpen) {
-        modalCls.push(classes.Active);
-    }
 
     function submitRegister(event) {
         event.preventDefault();
@@ -33,24 +26,20 @@ export default function ModalRegister(props) {
         });
     }
 
-    if (props.isRegisterOpen) {
-        return (
-            <div className={modalCls.join(' ')}>
-                <div className={classes.CloseBtn}>
-                    <FontAwesomeIcon icon={faTimesCircle} onClick={() => props.setIsHotKeysOpen(false)} />
-                </div>
+    return (
+        <Modal isShow={props.isRegisterOpen} closeAllModal={props.closeAllModal}>
+            <div className={classes.ModalRegister}>
                 <h1>Register</h1>
                 <form>
-                    <label htmlFor="email">Email:</label>
-                    <input id="email" ref={emailRef}></input>
+                    <label htmlFor="register_email">Email:</label>
+                    <input id="register_email" ref={emailRef}></input>
 
-                    <label htmlFor="password">Password:</label>
-                    <input id="password" ref={passwordRef}></input>
+                    <label htmlFor="register_password">Password:</label>
+                    <input id="register_password" ref={passwordRef}></input>
 
                     <button onClick={submitRegister}>Register</button>
                 </form>
             </div>
-        );
-    }
-    return null;
+        </Modal>
+    );
 }

@@ -1,32 +1,18 @@
 import React from 'react';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowCircleDown,
     faArrowCircleLeft,
     faArrowCircleRight,
     faArrowCircleUp,
-    faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import classes from './ModalHotKeys.module.scss';
+import Modal from '../Modal';
 
 export default function ModalHotKeys(props) {
-    const modalCls = [classes.ModalHotKeys];
-
-    if (props.isHotKeysOpen) {
-        modalCls.push(classes.Active);
-    }
-
-    useHotkeys('esc', () => {
-        props.setIsHotKeysOpen(false);
-    });
-
-    if (props.isHotKeysOpen) {
-        return (
-            <div className={modalCls.join(' ')}>
-                <div className={classes.CloseBtn}>
-                    <FontAwesomeIcon icon={faTimesCircle} onClick={() => props.setIsHotKeysOpen(false)} />
-                </div>
+    return (
+        <Modal isShow={props.isHotKeysOpen} closeAllModal={props.closeAllModal}>
+            <div className={classes.ModalHotKeys}>
                 <h1>Hot Keys</h1>
                 <div>ESC - close modal window</div>
                 <div>Q - start new game</div>
@@ -40,7 +26,6 @@ export default function ModalHotKeys(props) {
                 </div>
                 <div>ENTER - set cross or zero</div>
             </div>
-        );
-    }
-    return null;
+        </Modal>
+    );
 }

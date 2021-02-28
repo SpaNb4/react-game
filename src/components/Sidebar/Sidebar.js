@@ -10,11 +10,12 @@ import {
     faVolumeMute,
     faVolumeUp,
 } from '@fortawesome/free-solid-svg-icons';
-import ModalHotKeys from '../ModalHotKeys/ModalHotKeys';
 import soundBackground from '../GameField/audio/back_music.mp3';
 import classes from './Sidebar.module.scss';
-import ModalLogin from '../ModalLogin/ModalLogin';
-import ModalRegister from '../ModalRegister/ModalRegister';
+import ModalStats from '../Modals/ModalStats/ModalStats';
+import ModalHotKeys from '../Modals/ModalHotKeys/ModalHotKeys';
+import ModalLogin from '../Modals/ModalLogin/ModalLogin';
+import ModalRegister from '../Modals/ModalRegister/ModalRegister';
 
 const music = new Audio(soundBackground);
 music.loop = true;
@@ -25,6 +26,7 @@ function Menu(props) {
     const [isHotKeysOpen, setIsHotKeysOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+    const [isStatsOpen, setIsStatsOpen] = useState(false);
     const menuCls = [classes.MenuPopup];
     const btnCls = [classes.Icon];
     const soundIconCls = [classes.SoundIcon, 'fa-fw'];
@@ -36,17 +38,11 @@ function Menu(props) {
 
     function blackoutClickHandler(event) {
         setIsMenuOpen(!isMenuOpen);
-
-        if (props.isStatsOpen) {
-            props.openStats(false);
-        }
-        if (isHotKeysOpen) {
-            setIsHotKeysOpen(false);
-        }
+        closeAllModal();
     }
 
     useHotkeys('esc', () => {
-        props.openStats(false);
+        closeAllModal();
     });
     useHotkeys('m', () => setIsMenuOpen(!isMenuOpen));
 
@@ -70,26 +66,34 @@ function Menu(props) {
         blackoutCls.push(classes.BlackoutActive);
     }
 
-    function statsClickHandler() {
-        props.openStats(!props.isStatsOpen);
+    function closeAllModal() {
+        setIsLoginOpen(false);
+        setIsRegisterOpen(false);
+        setIsStatsOpen(false);
         setIsHotKeysOpen(false);
     }
 
+    function statsClickHandler() {
+        closeAllModal();
+        setIsStatsOpen(!isStatsOpen);
+    }
+
     function hotKeysClickHandler() {
+        closeAllModal();
         setIsHotKeysOpen(!isHotKeysOpen);
-        props.openStats(false);
     }
 
     function loginClickHandler() {
-        setIsLoginOpen(true);
+        closeAllModal();
+        setIsLoginOpen(!isLoginOpen);
     }
 
     function registerClickHandler() {
-        setIsRegisterOpen(true);
+        closeAllModal();
+        setIsRegisterOpen(!isRegisterOpen);
     }
 
     function logoutClickHandler() {
-        props.setAuth();
         fetch(`http://localhost:8000/logout`, {
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
@@ -97,8 +101,8 @@ function Menu(props) {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
                 if (res) {
+                    props.setAuth(false);
                 }
             });
     }
@@ -179,9 +183,15 @@ function Menu(props) {
                 </ul>
             </div>
             <div className={blackoutCls.join(' ')} onClick={blackoutClickHandler}></div>
-            <ModalHotKeys isHotKeysOpen={isHotKeysOpen} setIsHotKeysOpen={setIsHotKeysOpen} />
-            <ModalLogin isLoginOpen={isLoginOpen} {...props} />
-            <ModalRegister isRegisterOpen={isRegisterOpen} />
+            <ModalStats isStatsOpen={isStatsOpen} stats={props.stats} closeAllModal={closeAllModal} />
+            <ModalHotKeys isHotKeysOpen={isHotKeysOpen} closeAllModal={closeAllModal} />
+            <ModalLogin
+                isLoginOpen={isLoginOpen}
+                setAuth={props.setAuth}
+                setStatsFromBD={props.setStatsFromBD}
+                closeAllModal={closeAllModal}
+            />
+            <ModalRegister isRegisterOpen={isRegisterOpen} closeAllModal={closeAllModal} />
         </div>
     );
 }

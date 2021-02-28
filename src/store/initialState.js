@@ -12,7 +12,6 @@ const initialState = JSON.parse(localStorage.getItem('state')) || {
     soundVolume: 1,
     musicVolume: 1,
     isWithDiagonals: true,
-    isStatsOpen: false,
     stats: [],
     isAuthenticated: false,
 };

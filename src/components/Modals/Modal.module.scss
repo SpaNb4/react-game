@@ -1,4 +1,4 @@
-.ModalStats {
+.Modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -9,13 +9,6 @@
     background-color: #fafafa;
     width: 500px;
     height: 500px;
-    table {
-        margin: 0 auto;
-        td {
-            text-align: center;
-            padding: 10px;
-        }
-    }
 }
 
 .Active {

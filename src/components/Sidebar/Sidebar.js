@@ -104,6 +104,7 @@ function Menu(props) {
             .then((res) => {
                 if (res) {
                     props.setAuth(false);
+                    localStorage.removeItem('username');
                 }
             });
     }

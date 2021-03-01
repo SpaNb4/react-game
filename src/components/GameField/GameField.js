@@ -104,25 +104,17 @@ export default function GameField(props) {
             props.setStats(stats);
 
             if (props.isAuthenticated) {
-                fetch(`${backendURL}/checkauth`, {
-                    method: 'get',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                })
-                    .then((res) => res.json())
-                    .then((res) => {
-                        if (res.username)
-                            return fetch(`${backendURL}/save`, {
-                                method: 'post',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    username: res.username,
-                                    stats: [...props.stats, stats],
-                                }),
-                            });
-                    });
+                const username = localStorage.getItem('username');
+                fetch(`${backendURL}/save`, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        stats: [...props.stats, stats],
+                    }),
+                });
             }
         }
 

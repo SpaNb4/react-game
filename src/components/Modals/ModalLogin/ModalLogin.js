@@ -32,6 +32,7 @@ export default function ModalLogin(props) {
                     loginStatusRef.current.classList.add(classes.Success);
                     loginStatusRef.current.classList.remove(classes.Failed);
                     props.setAuth(true);
+                    localStorage.setItem('username', res.success);
 
                     return fetch(`${backendURL}/getsave`, {
                         method: 'post',
@@ -63,7 +64,7 @@ export default function ModalLogin(props) {
                 <h1>Login</h1>
                 <form>
                     <label htmlFor="login_email">Email:</label>
-                    <input id="login_email" ref={emailRef} type="text"></input>
+                    <input id="login_email" ref={emailRef} type="email"></input>
                     <label htmlFor="login_password">Password:</label>
                     <input id="login_password" ref={passwordRef} type="password"></input>
                     <div ref={loginStatusRef} className={classes.LoginStatus}></div>

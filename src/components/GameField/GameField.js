@@ -10,10 +10,12 @@ import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
 
+const element = document.getElementById('root');
+
 export default function GameField(props) {
     const [activeIndex, setActiveIndex] = useState(null);
     const [isAutoPlay, setIsAutoPlay] = useState(false);
-    const [isFullScreen, setIsFullScreen] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(true);
 
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -222,15 +224,25 @@ export default function GameField(props) {
         return () => clearInterval(interval);
     }, [isAutoPlay, props.cells, props.isEnd, props.xIsNext]);
 
-    function fullScreenClickHandler() {
-        const element = document.getElementById('root');
+    useEffect(() => {
+        element.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                setIsFullScreen(false);
+            } else {
+                setIsFullScreen(true);
+            }
+        });
 
+        return () => {
+            element.removeEventListener('fullscreenchange', fullScreenClickHandler);
+        };
+    }, []);
+
+    function fullScreenClickHandler() {
         if (document.fullscreenElement) {
             document.exitFullscreen();
-            setIsFullScreen(false);
         } else {
             fullScreen(element);
-            setIsFullScreen(true);
         }
     }
 
@@ -250,13 +262,13 @@ export default function GameField(props) {
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
                 {isFullScreen ? (
-                    <FontAwesomeIcon icon={faCompressAlt} className={classes.Icon} onClick={fullScreenClickHandler} />
-                ) : (
                     <FontAwesomeIcon
                         icon={faExpandArrowsAlt}
                         className={classes.Icon}
                         onClick={fullScreenClickHandler}
                     />
+                ) : (
+                    <FontAwesomeIcon icon={faCompressAlt} className={classes.Icon} onClick={fullScreenClickHandler} />
                 )}
             </div>
             <div className={classes.CellsItems}>

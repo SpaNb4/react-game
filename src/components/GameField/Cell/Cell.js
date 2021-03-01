@@ -6,14 +6,18 @@ export default function Cell(props) {
     const cellCls = [classes.Marker];
 
     if (props.win) {
-        cls.push(classes.Win);
+        if (props.isOrangeTheme) {
+            cls.push(classes.OrangeThemeWin);
+        } else {
+            cls.push(classes.Win);
+        }
     }
 
     if (props.active === props.number && !props.win) {
         cls.push(classes.Active);
     }
 
-    if (props.isOrange) {
+    if (props.isOrangeTheme) {
         cls.push(classes.OrangeTheme);
         cellCls.push(classes.OrangeTheme);
     }

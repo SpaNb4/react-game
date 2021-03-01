@@ -4,25 +4,45 @@
     align-items: center;
     margin-top: 40px;
     margin-bottom: 60px;
-
+    padding: 0 60px;
     .TopMenuField {
         display: flex;
         align-items: center;
         gap: 30px;
+        margin-bottom: 20px;
     }
 
     .Moves {
         font-size: 36px;
         text-transform: uppercase;
+        text-align: center;
         color: #fff;
-        margin-bottom: 20px;
+
+        @include resolution(tablet) {
+            font-size: 30px;
+        }
+        @include resolution(big-mobile) {
+            font-size: 25px;
+        }
+        @include resolution(mobile) {
+            font-size: 20px;
+        }
     }
 
     .CellsItems {
         display: grid;
-        grid-template-columns: repeat(3, 166px);
-        height: 500px;
+        justify-content: center;
+        width: 50%;
+        grid-template-columns: repeat(3, minmax(50px, 166px));
+        grid-template-rows: repeat(3, minmax(50px, 166px));
+        height: calc(50vw);
+        max-height: 500px;
         margin-bottom: 20px;
+
+        @include resolution(ultra-desktop) {
+            grid-template-columns: repeat(3, minmax(50px, 125px));
+            max-height: 380px;
+        }
     }
 
     .Icon {
@@ -35,8 +55,26 @@
         display: flex;
         gap: 20px;
         font-size: 28px;
+        text-align: center;
         text-transform: uppercase;
         cursor: pointer;
         color: #ffffff;
+        transition: 0.3s color;
+
+        div {
+            &:hover {
+                color: #655858;
+            }
+        }
+
+        @include resolution(tablet) {
+            font-size: 24px;
+        }
+        @include resolution(big-mobile) {
+            font-size: 20px;
+        }
+        @include resolution(mobile) {
+            font-size: 16px;
+        }
     }
 }

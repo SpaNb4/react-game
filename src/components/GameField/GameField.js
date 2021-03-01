@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCompressAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 import Cell from './Cell/Cell';
 import classes from './GameField.module.scss';
 import soundX from './audio/X_click.wav';
@@ -11,6 +13,7 @@ import { Timer } from './Timer/Timer';
 export default function GameField(props) {
     const [activeIndex, setActiveIndex] = useState(null);
     const [isAutoPlay, setIsAutoPlay] = useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
 
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -97,25 +100,27 @@ export default function GameField(props) {
             };
             props.setStats(stats);
 
-            fetch(`http://localhost:8000/checkauth`, {
-                method: 'get',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    if (res.username)
-                        return fetch(`http://localhost:8000/save`, {
-                            method: 'post',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                username: res.username,
-                                stats: [...props.stats, stats],
-                            }),
-                        });
-                });
+            if (props.isAuthenticated) {
+                fetch(`http://localhost:8000/checkauth`, {
+                    method: 'get',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                })
+                    .then((res) => res.json())
+                    .then((res) => {
+                        if (res.username)
+                            return fetch(`http://localhost:8000/save`, {
+                                method: 'post',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    username: res.username,
+                                    stats: [...props.stats, stats],
+                                }),
+                            });
+                    });
+            }
         }
 
         localStorage.setItem('state', JSON.stringify(props));
@@ -217,11 +222,42 @@ export default function GameField(props) {
         return () => clearInterval(interval);
     }, [isAutoPlay, props.cells, props.isEnd, props.xIsNext]);
 
+    function fullScreenClickHandler() {
+        const element = document.getElementById('root');
+
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+            setIsFullScreen(false);
+        } else {
+            fullScreen(element);
+            setIsFullScreen(true);
+        }
+    }
+
+    function fullScreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.webkitrequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.mozRequestFullscreen) {
+            element.mozRequestFullScreen();
+        }
+    }
+
     return (
         <div className={classes.GameField}>
             <Timer {...props} />
             <div className={classes.TopMenuField}>
                 <div className={classes.Moves}>{status}</div>
+                {isFullScreen ? (
+                    <FontAwesomeIcon icon={faCompressAlt} className={classes.Icon} onClick={fullScreenClickHandler} />
+                ) : (
+                    <FontAwesomeIcon
+                        icon={faExpandArrowsAlt}
+                        className={classes.Icon}
+                        onClick={fullScreenClickHandler}
+                    />
+                )}
             </div>
             <div className={classes.CellsItems}>
                 {props.cells.map((cell, index) => {
@@ -229,7 +265,7 @@ export default function GameField(props) {
                         if (winner.lines[0] == index || winner.lines[1] == index || winner.lines[2] == index) {
                             return (
                                 <Cell
-                                    isOrange={props.isOrange}
+                                    isOrangeTheme={props.isOrangeTheme}
                                     win={true}
                                     key={index}
                                     value={props.cells[index]}
@@ -241,7 +277,7 @@ export default function GameField(props) {
                     if (isAutoPlay) {
                         return (
                             <Cell
-                                isOrange={props.isOrange}
+                                isOrangeTheme={props.isOrangeTheme}
                                 active={activeIndex}
                                 key={index}
                                 number={index}
@@ -251,7 +287,7 @@ export default function GameField(props) {
                     } else {
                         return (
                             <Cell
-                                isOrange={props.isOrange}
+                                isOrangeTheme={props.isOrangeTheme}
                                 active={activeIndex}
                                 key={index}
                                 number={index}
@@ -263,7 +299,7 @@ export default function GameField(props) {
                 })}
             </div>
             <div className={classes.BottomMenuField}>
-                <div onClick={changeMovesOrder}>Change Moves Order</div>
+                <div onClick={changeMovesOrder}>Moves Order</div>
                 <div onClick={startNewGame}>New Game</div>
                 <div onClick={autoPlay}>Autoplay</div>
             </div>

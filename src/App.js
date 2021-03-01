@@ -26,9 +26,11 @@ import {
 
 function App(props) {
     if (props.isOrangeTheme) {
-        document.body.classList.add('OrangeTheme');
+        document.getElementById('root').classList.add(classes.OrangeTheme);
+        document.getElementById('root').classList.remove(classes.StandartTheme);
     } else {
-        document.body.classList.remove('OrangeTheme');
+        document.getElementById('root').classList.remove(classes.OrangeTheme);
+        document.getElementById('root').classList.add(classes.StandartTheme);
     }
 
     return (

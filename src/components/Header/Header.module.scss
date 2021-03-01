@@ -14,5 +14,15 @@
         text-align: center;
         text-transform: uppercase;
         color: #fff;
+
+        @include resolution(tablet) {
+            font-size: 35px;
+        }
+        @include resolution(big-mobile) {
+            font-size: 30px;
+        }
+        @include resolution(mobile) {
+            font-size: 25px;
+        }
     }
 }

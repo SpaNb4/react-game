@@ -9,6 +9,16 @@
     background-color: #fafafa;
     width: 500px;
     height: 500px;
+
+    @include resolution(tablet) {
+        width: 380px;
+    }
+    @include resolution(big-mobile) {
+        width: 320px;
+    }
+    @include resolution(mobile) {
+        width: 280px;
+    }
 }
 
 .Active {

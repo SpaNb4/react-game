@@ -107,6 +107,10 @@ function Menu(props) {
             });
     }
 
+    if (props.isOrangeTheme) {
+        menuCls.push(classes.OrangeTheme);
+    }
+
     return (
         <div>
             <FontAwesomeIcon className={btnCls.join(' ')} icon={faBars} onClick={menuClickHandler} />

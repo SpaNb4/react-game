@@ -24,8 +24,11 @@
             padding: 15px;
             color: #ffffff;
             font-size: 14px;
-            transition: all 0.3 ease;
+            transition: background 0.3s;
             cursor: pointer;
+            &:active {
+                background: darken($color: #4caf50, $amount: 10);
+            }
         }
     }
     h1 {

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import classes from './ModalLogin.module.scss';
+import classes from '../ModalAuth/ModalAuth.module.scss';
 import Modal from '../Modal';
 import { backendURL } from '../../../config';
 
@@ -60,15 +60,15 @@ export default function ModalLogin(props) {
 
     return (
         <Modal isShow={props.isLoginOpen} closeAllModal={props.closeAllModal}>
-            <div className={classes.ModalLogin}>
+            <div className={classes.ModalAuth}>
                 <h1>Login</h1>
-                <form>
+                <form onSubmit={submitLogin}>
                     <label htmlFor="login_email">Email:</label>
-                    <input id="login_email" ref={emailRef} type="email"></input>
+                    <input id="login_email" ref={emailRef} type="email" required></input>
                     <label htmlFor="login_password">Password:</label>
-                    <input id="login_password" ref={passwordRef} type="password"></input>
-                    <div ref={loginStatusRef} className={classes.LoginStatus}></div>
-                    <button onClick={submitLogin}>Login</button>
+                    <input id="login_password" ref={passwordRef} type="password" minLength="4" required></input>
+                    <div ref={loginStatusRef} className={classes.Status}></div>
+                    <button>Login</button>
                 </form>
             </div>
         </Modal>

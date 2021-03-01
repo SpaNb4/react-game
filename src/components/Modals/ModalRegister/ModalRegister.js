@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Modal from '../Modal';
 import classes from './ModalRegister.module.scss';
+import { backendURL } from '../../../config';
 
 export default function ModalRegister(props) {
     const emailRef = useRef(null);
@@ -8,7 +9,7 @@ export default function ModalRegister(props) {
 
     function submitRegister(event) {
         event.preventDefault();
-        fetch(`http://localhost:8000/register`, {
+        fetch(`${backendURL}/register`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',

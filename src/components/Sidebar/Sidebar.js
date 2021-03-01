@@ -16,6 +16,7 @@ import ModalStats from '../Modals/ModalStats/ModalStats';
 import ModalHotKeys from '../Modals/ModalHotKeys/ModalHotKeys';
 import ModalLogin from '../Modals/ModalLogin/ModalLogin';
 import ModalRegister from '../Modals/ModalRegister/ModalRegister';
+import { backendURL } from '../../config';
 
 const music = new Audio(soundBackground);
 music.loop = true;
@@ -94,7 +95,7 @@ function Menu(props) {
     }
 
     function logoutClickHandler() {
-        fetch(`http://localhost:8000/logout`, {
+        fetch(`${backendURL}/logout`, {
             method: 'get',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

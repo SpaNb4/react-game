@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import classes from './ModalLogin.module.scss';
 import Modal from '../Modal';
+import { backendURL } from '../../../config';
 
 export default function ModalLogin(props) {
     const emailRef = useRef(null);
@@ -9,7 +10,7 @@ export default function ModalLogin(props) {
 
     function submitLogin(event) {
         event.preventDefault();
-        fetch(`http://localhost:8000/login`, {
+        fetch(`${backendURL}/login`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ export default function ModalLogin(props) {
                     loginStatusRef.current.classList.remove(classes.Failed);
                     props.setAuth(true);
 
-                    return fetch(`http://localhost:8000/getsave`, {
+                    return fetch(`${backendURL}/getsave`, {
                         method: 'post',
                         headers: {
                             'Content-Type': 'application/json',

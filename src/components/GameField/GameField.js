@@ -9,6 +9,7 @@ import soundO from './audio/O_click.wav';
 import soundWin from './audio/win.wav';
 import soundNoWinner from './audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
+import { backendURL } from '../../config';
 
 const element = document.getElementById('root');
 
@@ -103,7 +104,7 @@ export default function GameField(props) {
             props.setStats(stats);
 
             if (props.isAuthenticated) {
-                fetch(`http://localhost:8000/checkauth`, {
+                fetch(`${backendURL}/checkauth`, {
                     method: 'get',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -111,7 +112,7 @@ export default function GameField(props) {
                     .then((res) => res.json())
                     .then((res) => {
                         if (res.username)
-                            return fetch(`http://localhost:8000/save`, {
+                            return fetch(`${backendURL}/save`, {
                                 method: 'post',
                                 headers: {
                                     'Content-Type': 'application/json',

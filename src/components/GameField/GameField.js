@@ -17,6 +17,7 @@ export default function GameField(props) {
     const [activeIndex, setActiveIndex] = useState(null);
     const [isAutoPlay, setIsAutoPlay] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(true);
+    const [isActive, setIsActive] = useState(true);
 
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -125,6 +126,7 @@ export default function GameField(props) {
         () => {
             if (activeIndex % 3) {
                 setActiveIndex((prevCount) => prevCount - 1);
+                setIsActive(true);
             }
         },
         [activeIndex]
@@ -134,6 +136,7 @@ export default function GameField(props) {
         () => {
             if (activeIndex > 9 / 3 - 1) {
                 setActiveIndex((prevCount) => prevCount - 3);
+                setIsActive(true);
             }
         },
         [activeIndex]
@@ -143,6 +146,7 @@ export default function GameField(props) {
         () => {
             if ((activeIndex + 1) % 3) {
                 setActiveIndex((prevCount) => prevCount + 1);
+                setIsActive(true);
             }
         },
         [activeIndex]
@@ -152,6 +156,7 @@ export default function GameField(props) {
         () => {
             if (activeIndex < (6 * 3) / 3) {
                 setActiveIndex((prevCount) => prevCount + 3);
+                setIsActive(true);
             }
         },
         [activeIndex]
@@ -188,6 +193,7 @@ export default function GameField(props) {
     function startNewGame() {
         props.newGame();
         setIsAutoPlay(false);
+        setIsActive(false);
     }
 
     function getRandomIndex() {
@@ -284,23 +290,34 @@ export default function GameField(props) {
                         return (
                             <Cell
                                 isOrangeTheme={props.isOrangeTheme}
-                                active={activeIndex}
                                 key={index}
                                 number={index}
                                 value={props.cells[index]}
                             />
                         );
                     } else {
-                        return (
-                            <Cell
-                                isOrangeTheme={props.isOrangeTheme}
-                                active={activeIndex}
-                                key={index}
-                                number={index}
-                                value={props.cells[index]}
-                                cellClickHandler={() => cellClickHandler(index)}
-                            />
-                        );
+                        if (isActive) {
+                            return (
+                                <Cell
+                                    isOrangeTheme={props.isOrangeTheme}
+                                    active={activeIndex}
+                                    key={index}
+                                    number={index}
+                                    value={props.cells[index]}
+                                    cellClickHandler={() => cellClickHandler(index)}
+                                />
+                            );
+                        } else {
+                            return (
+                                <Cell
+                                    isOrangeTheme={props.isOrangeTheme}
+                                    key={index}
+                                    number={index}
+                                    value={props.cells[index]}
+                                    cellClickHandler={() => cellClickHandler(index)}
+                                />
+                            );
+                        }
                     }
                 })}
             </div>

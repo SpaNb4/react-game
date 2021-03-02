@@ -23,7 +23,6 @@ export default function GameField(props) {
             props.startGame();
 
             const cellsCopy = props.cells.slice();
-
             if (calculateWinner(props.cells) || props.cells[index]) {
                 return;
             }
@@ -161,9 +160,11 @@ export default function GameField(props) {
     useHotkeys(
         'enter',
         () => {
-            cellClickHandler(activeIndex);
+            if (!isAutoPlay && !props.isEnd) {
+                cellClickHandler(activeIndex);
+            }
         },
-        [activeIndex]
+        [activeIndex, props.cells, props.isEnd]
     );
 
     useHotkeys('q', () => props.newGame());

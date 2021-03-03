@@ -16,7 +16,7 @@
         font-size: 36px;
         text-transform: uppercase;
         text-align: center;
-        color: #fff;
+        color: $color-white;
 
         @include resolution(tablet) {
             font-size: 30px;
@@ -47,7 +47,7 @@
 
     .Icon {
         font-size: 28px;
-        color: #fff;
+        color: $color-white;
         cursor: pointer;
     }
 
@@ -58,12 +58,12 @@
         text-align: center;
         text-transform: uppercase;
         cursor: pointer;
-        color: #ffffff;
+        color: $color-white;
         transition: 0.3s color;
 
         div {
             &:hover {
-                color: #655858;
+                color: $color-zambezi;
             }
         }
 

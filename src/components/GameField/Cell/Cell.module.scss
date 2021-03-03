@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid burlywood;
+    border: 3px solid $color-calico;
     cursor: pointer;
 
     &.Filled {
@@ -10,17 +10,17 @@
     }
 
     &.Win {
-        background: #4b7777;
+        background: $color-cutty-sark;
         transition: background 2s;
     }
 
     &.OrangeThemeWin {
-        background: #ff9800;
+        background: $color-orange-peel;
         transition: background 2s;
     }
 
     &.Active {
-        box-shadow: 0px 0px 0px 2px #fff inset;
+        box-shadow: 0px 0px 0px 2px $color-white inset;
     }
 
     &:nth-child(1) {
@@ -56,7 +56,7 @@
 .Marker {
     position: absolute;
     font-size: 120px;
-    color: #fff;
+    color: $color-white;
     animation: thesign 0.5s ease-in-out;
 
     @include resolution(tablet) {
@@ -80,6 +80,6 @@
 }
 
 .OrangeTheme {
-    color: #ffeb3b;
-    border-color: #9c6f46;
+    color: $color-gorse;
+    border-color: $color-cape-palliser;
 }

@@ -9,7 +9,7 @@
         cursor: pointer;
         transition: 0.3s color;
         &:hover {
-            color: #fff;
+            color: $color-white;
         }
     }
     ul {
@@ -23,7 +23,7 @@
     left: 40px;
     z-index: 2;
     font-size: 28px;
-    color: #fff;
+    color: $color-white;
     cursor: pointer;
     transition: 1s;
 }
@@ -48,11 +48,11 @@
 
 .Rotate {
     transform: rotate(90deg);
-    color: #000000;
+    color: $color-black;
 }
 
 .MenuPopup {
-    background: #34cad0;
+    background: $color-scooter;
     position: fixed;
     overflow: hidden;
     width: 0;
@@ -85,6 +85,6 @@
 }
 
 .OrangeTheme {
-    background: #ffae72;
-    color: #000;
+    background: $color-macaroni-cheese;
+    color: $color-black;
 }

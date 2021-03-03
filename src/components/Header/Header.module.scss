@@ -1,7 +1,7 @@
 .Header {
     width: 70%;
     height: 50px;
-    border-bottom: 3px dotted burlywood;
+    border-bottom: 3px dotted $color-calico;
     padding-top: 20px;
     display: flex;
     flex-flow: row wrap;
@@ -13,7 +13,7 @@
         font-size: 40px;
         text-align: center;
         text-transform: uppercase;
-        color: #fff;
+        color: $color-white;
 
         @include resolution(tablet) {
             font-size: 35px;

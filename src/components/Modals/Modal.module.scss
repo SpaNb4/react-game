@@ -6,7 +6,7 @@
     transition: 200ms ease-in-out;
     z-index: 1;
     border-radius: 0.9rem;
-    background-color: #fafafa;
+    background-color: $color-alabaster;
     width: 500px;
     height: 500px;
 
@@ -30,6 +30,6 @@
     top: -45px;
     right: -45px;
     font-size: 38px;
-    color: #fff;
+    color: $color-white;
     cursor: pointer;
 }

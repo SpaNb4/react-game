@@ -5,7 +5,7 @@
         input {
             font-family: 'Roboto', sans-serif;
             outline: 0;
-            background: #f2f2f2;
+            background: $color-concrete;
             width: 100%;
             border: 0;
             margin: 0 0 15px;
@@ -17,17 +17,17 @@
             font-family: 'Roboto', sans-serif;
             text-transform: uppercase;
             outline: 0;
-            background: #4caf50;
+            background: $color-fruit-salad;
             width: 100%;
             margin-top: 40px;
             border: 0;
             padding: 15px;
-            color: #ffffff;
+            color: $color-white;
             font-size: 14px;
             transition: background 0.3s;
             cursor: pointer;
             &:active {
-                background: darken($color: #4caf50, $amount: 10);
+                background: darken($color: $color-fruit-salad, $amount: 10);
             }
         }
     }
@@ -39,13 +39,13 @@
 
 .Status {
     position: absolute;
-    color: red;
+    color: $color-red;
 }
 
 .Success {
-    color: green;
+    color: $color-green;
 }
 
 .Failed {
-    color: red;
+    color: $color-red;
 }

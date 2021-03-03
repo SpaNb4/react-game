@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import classes from './Cell.module.scss';
 
 export default function Cell(props) {
     const cls = [classes.Cell];
     const cellCls = [classes.Marker];
+    const cellRef = useRef(null);
 
     if (props.win) {
         if (props.isOrangeTheme) {
@@ -26,9 +27,21 @@ export default function Cell(props) {
         cls.push(classes.Filled);
     }
 
+    function markerClickHandler() {
+        cellRef.current.classList.add(classes.Shake);
+
+        setTimeout(() => {
+            cellRef.current.classList.remove(classes.Shake);
+        }, 1000);
+    }
+
     return (
-        <div className={cls.join(' ')} onClick={props.cellClickHandler}>
-            {props.value ? <span className={cellCls.join(' ')}>{props.value}</span> : null}
+        <div ref={cellRef} className={cls.join(' ')} onClick={props.cellClickHandler}>
+            {props.value ? (
+                <span className={cellCls.join(' ')} onClick={markerClickHandler}>
+                    {props.value}
+                </span>
+            ) : null}
         </div>
     );
 }

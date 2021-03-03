@@ -27,6 +27,22 @@
         @include resolution(mobile) {
             font-size: 20px;
         }
+
+        &.Winner {
+            animation: color-change 3s infinite;
+
+            @keyframes color-change {
+                0% {
+                    color: $color-calico;
+                }
+                50% {
+                    color: $color-orange-peel;
+                }
+                100% {
+                    color: $color-gorse;
+                }
+            }
+        }
     }
 
     .CellsItems {

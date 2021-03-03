@@ -18,6 +18,7 @@ export default function GameField(props) {
     const [isAutoPlay, setIsAutoPlay] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(true);
     const [isActive, setIsActive] = useState(true);
+    const movesCls = [classes.Moves];
 
     function cellClickHandler(index) {
         if (!props.isEnd) {
@@ -176,6 +177,7 @@ export default function GameField(props) {
 
     if (winner) {
         status = winner.winner + ' win!';
+        movesCls.push(classes.Winner);
     } else {
         if (props.isEnd) {
             status = 'Nobody wins! Try again';
@@ -256,11 +258,15 @@ export default function GameField(props) {
         }
     }
 
+    if (!props.cells.includes(null) && !winner) {
+        movesCls.push(classes.Winner);
+    }
+
     return (
         <div className={classes.GameField}>
             <Timer {...props} />
             <div className={classes.TopMenuField}>
-                <div className={classes.Moves}>{status}</div>
+                <div className={movesCls.join(' ')}>{status}</div>
                 {isFullScreen ? (
                     <FontAwesomeIcon
                         icon={faExpandArrowsAlt}
@@ -274,14 +280,13 @@ export default function GameField(props) {
             <div className={classes.CellsItems}>
                 {props.cells.map((cell, index) => {
                     if (winner) {
-                        if (winner.lines[0] == index || winner.lines[1] == index || winner.lines[2] == index) {
+                        if (winner.lines[0] === index || winner.lines[1] === index || winner.lines[2] === index) {
                             return (
                                 <Cell
                                     isOrangeTheme={props.isOrangeTheme}
                                     win={true}
                                     key={index}
                                     value={props.cells[index]}
-                                    cellClickHandler={() => cellClickHandler(index)}
                                 />
                             );
                         }

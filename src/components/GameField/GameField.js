@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompressAlt, faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 import Cell from './Cell/Cell';
 import classes from './GameField.module.scss';
-import soundX from './audio/X_click.wav';
-import soundO from './audio/O_click.wav';
-import soundWin from './audio/win.wav';
-import soundNoWinner from './audio/no_winner.wav';
+import soundX from '../../assets/audio/X_click.wav';
+import soundO from '../../assets/audio/O_click.wav';
+import soundWin from '../../assets/audio/win.wav';
+import soundNoWinner from '../../assets/audio/no_winner.wav';
 import { Timer } from './Timer/Timer';
 import { backendURL } from '../../config';
 

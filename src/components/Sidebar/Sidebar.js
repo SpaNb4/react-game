@@ -10,7 +10,7 @@ import {
     faVolumeMute,
     faVolumeUp,
 } from '@fortawesome/free-solid-svg-icons';
-import soundBackground from '../GameField/audio/back_music.mp3';
+import soundBackground from '../../assets/audio/back_music.mp3';
 import classes from './Sidebar.module.scss';
 import ModalStats from '../Modals/ModalStats/ModalStats';
 import ModalHotKeys from '../Modals/ModalHotKeys/ModalHotKeys';
